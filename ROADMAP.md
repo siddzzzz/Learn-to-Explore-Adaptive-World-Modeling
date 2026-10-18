@@ -43,18 +43,18 @@
 
 ---
 
-### [ ] Phase 3: Active Planning & Acquisition Functions
-- [ ] Implement `src/planning/acquisition.py`:
+### [x] Phase 3: Active Planning & Acquisition Functions
+- [x] Implement `src/planning/acquisition.py`:
   - `compute_chd()`: Contrastive Hypothesis Discrepancy (Jensen-Shannon divergence).
   - `compute_bald()`: Bayesian Active Learning by Disagreement.
   - `compute_ensemble_variance()`: Plan2Explore baseline metric.
   - `compute_prediction_error()`: ICM curiosity baseline metric.
-- [ ] Implement `src/planning/trajectory_cem.py`:
+- [x] Implement `src/planning/trajectory_cem.py`:
   - Multi-step Cross-Entropy Method optimizer over action sequences.
   - Imagined trajectory rollouts under current belief dynamics.
-- [ ] Implement `src/planning/mppi.py`:
+- [x] Implement `src/planning/mppi.py`:
   - Model Predictive Path Integral controller for smooth continuous trajectories.
-- [ ] Tests: `tests/test_planning.py` (Verify CHD computation, CEM optimization convergence, noisy TV invariance).
+- [x] Tests: `tests/test_planning.py` (Verify CHD computation, CEM optimization convergence, noisy TV invariance).
 
 ---
 
