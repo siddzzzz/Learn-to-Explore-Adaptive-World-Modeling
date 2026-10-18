@@ -58,15 +58,15 @@
 
 ---
 
-### [ ] Phase 4: Full Agent Architecture & Baseline Suite
-- [ ] Implement `src/agents/hex_wm_agent.py`:
+### [x] Phase 4: Full Agent Architecture & Baseline Suite
+- [x] Implement `src/agents/hex_wm_agent.py`:
   - Dual-phase agent: (1) Active Epistemic Discovery $\to$ (2) Goal-directed task execution.
-- [ ] Implement Baseline Agents:
+- [x] Implement Baseline Agents:
   - `src/agents/baselines/random_agent.py`: Uniform random explorer.
   - `src/agents/baselines/curiosity_agent.py`: ICM-style curiosity agent.
   - `src/agents/baselines/plan2explore_agent.py`: Ensemble disagreement agent.
   - `src/agents/baselines/oracle_agent.py`: Greedy Bayes-optimal upper bound.
-- [ ] Tests: `tests/test_agents.py` (Verify end-to-end runs for all agents on the benchmark).
+- [x] Tests: `tests/test_agents.py` (Verify end-to-end runs for all agents on the benchmark).
 
 ---
 

@@ -1,0 +1,82 @@
+"""Curiosity-driven Exploration Baseline (ICM-style).
+
+Selects actions that maximize one-step prediction error.
+Vulnerable to the Noisy TV problem (Theorem 1).
+Reference: Pathak et al. (2017), Curiosity-driven Exploration by Self-supervised Prediction.
+"""
+
+from __future__ import annotations
+from typing import Any, Dict, List, Optional
+import numpy as np
+from src.models.belief_tracker import BayesianBeliefTracker
+
+
+class CuriosityAgent:
+    """Agent driven by prediction error curiosity."""
+
+    def __init__(
+        self,
+        num_actions: int,
+        hypothesis_evaluators: List[Any],
+        action_decoder_fn: Any,
+        noise_variance: float = 0.0025,
+        rng: Optional[np.random.RandomState] = None
+    ):
+        self.num_actions = num_actions
+        self.hypothesis_evaluators = hypothesis_evaluators
+        self.K = len(hypothesis_evaluators)
+        self.action_decoder_fn = action_decoder_fn
+        self.noise_variance = noise_variance
+        self.rng = rng or np.random.RandomState(42)
+
+        self.belief_tracker = BayesianBeliefTracker(num_hypotheses=self.K)
+        # Running prediction model of transitions (mean over past seen transitions)
+        self.seen_errors: Dict[int, float] = {a: 1.0 for a in range(num_actions)}
+
+    def reset(self) -> None:
+        self.belief_tracker.reset()
+        self.seen_errors = {a: 1.0 for a in range(self.num_actions)}
+
+    def select_action(self, current_state: np.ndarray) -> int:
+        # Greedily pick action with highest recent prediction error
+        # (with small epsilon noise for exploration)
+        if self.rng.rand() < 0.1:
+            return int(self.rng.choice(self.num_actions))
+
+        best_a = max(self.seen_errors, key=self.seen_errors.get)
+        return int(best_a)
+
+    def observe_transition(
+        self,
+        state: np.ndarray,
+        action: int,
+        next_state: np.ndarray
+    ) -> Dict[str, Any]:
+        interv = self.action_decoder_fn(action)
+        map_idx, _ = self.belief_tracker.get_map_hypothesis()
+        pred_mu = self.hypothesis_evaluators[map_idx].evaluate(interventions=interv)
+        
+        # Prediction error includes observation noise (Noisy TV)
+        error = float(np.sum((next_state[:len(pred_mu)] - pred_mu) ** 2))
+        if len(next_state) > len(pred_mu):
+            # Noisy TV channel error adds unmodelable aleatoric error
+            noise_error = float(np.sum(next_state[len(pred_mu):] ** 2))
+            error += noise_error
+
+        self.seen_errors[action] = 0.8 * self.seen_errors[action] + 0.2 * error
+
+        # Bayesian belief update
+        log_liks = np.zeros(self.K, dtype=np.float64)
+        for k, model in enumerate(self.hypothesis_evaluators):
+            mu_k = model.evaluate(interventions=interv)
+            diff = next_state[:len(mu_k)] - mu_k
+            sse = float(np.sum(diff ** 2))
+            var = self.noise_variance
+            log_liks[k] = -0.5 * (len(mu_k) * np.log(2 * np.pi * var) + sse / var)
+
+        weights, surprise, is_anomaly = self.belief_tracker.update_from_log_likelihoods(log_liks)
+        return {
+            "entropy": self.belief_tracker.get_shannon_entropy(),
+            "weights": weights,
+            "prediction_error": error
+        }
