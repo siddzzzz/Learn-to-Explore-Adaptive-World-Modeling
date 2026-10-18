@@ -15,18 +15,18 @@
 
 ---
 
-### [ ] Phase 1: Environment Engine (Causal Lab Benchmark)
-- [ ] Implement `src/envs/causal_lab/dag_generator.py`:
+### [x] Phase 1: Environment Engine (Causal Lab Benchmark)
+- [x] Implement `src/envs/causal_lab/dag_generator.py`:
   - Parameterized Structural Causal Models (SCMs).
   - Graph isomorphism and candidate hypothesis space generation.
   - Interventional semantics ($\text{do}(X=x)$).
-- [ ] Implement `src/envs/causal_lab/lab_env.py`:
+- [x] Implement `src/envs/causal_lab/lab_env.py`:
   - Gymnasium standard API (`reset`, `step`, `render`).
   - Active experiment observation emission + controllable aleatoric noise channel ("Noisy TV").
   - Hidden rule oracle API: `get_hypothesis_space()`, `get_ground_truth()`, `mutate_rule()`.
-- [ ] Implement `src/envs/causal_lab/oracle.py`:
+- [x] Implement `src/envs/causal_lab/oracle.py`:
   - Exact analytical Bayesian posterior and entropy computation.
-- [ ] Tests: `tests/test_causal_lab.py` (Verify SCM transitions, Gymnasium compatibility, determinism, seed reproducibility).
+- [x] Tests: `tests/test_causal_lab.py` (Verify SCM transitions, Gymnasium compatibility, determinism, seed reproducibility).
 
 ---
 
