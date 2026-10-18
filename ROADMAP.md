@@ -70,17 +70,17 @@
 
 ---
 
-### [ ] Phase 5: Empirical Benchmarking & Publication Results
-- [ ] `benchmarks/run_entropy_benchmark.py`:
+### [x] Phase 5: Empirical Benchmarking & Publication Results
+- [x] `benchmarks/run_entropy_benchmark.py`:
   - Evaluate sample efficiency (Entropy reduction vs. environment steps).
   - Generate publication-quality comparison curves (HEx-WM vs. Baselines).
-- [ ] `benchmarks/run_noisy_tv_benchmark.py`:
+- [x] `benchmarks/run_noisy_tv_benchmark.py`:
   - Test robustness against aleatoric noise distractors.
-- [ ] `benchmarks/run_zero_shot_planning.py`:
+- [x] `benchmarks/run_zero_shot_planning.py`:
   - Evaluate downstream task success rate after active exploration.
-- [ ] `benchmarks/run_rule_mutation.py`:
+- [x] `benchmarks/run_rule_mutation.py`:
   - Test non-stationary adaptation when the ground truth rule changes mid-evaluation.
-- [ ] Generate comprehensive paper figures and summary report (`docs/EXPERIMENT_RESULTS.md`).
+- [x] Generate comprehensive paper figures and summary report (`docs/EXPERIMENT_RESULTS.md`).
 
 ---
 
