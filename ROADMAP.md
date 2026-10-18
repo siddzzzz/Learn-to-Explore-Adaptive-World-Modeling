@@ -30,16 +30,16 @@
 
 ---
 
-### [ ] Phase 2: Hypothesis Representation & Bayesian Belief Tracker
-- [ ] Implement `src/models/hypothesis.py`:
+### [x] Phase 2: Hypothesis Representation & Bayesian Belief Tracker
+- [x] Implement `src/models/hypothesis.py`:
   - Explicit & parameterized structural mechanism definitions.
-- [ ] Implement `src/models/belief_tracker.py`:
+- [x] Implement `src/models/belief_tracker.py`:
   - Bayesian belief state $b_t = (w_1, \dots, w_K)$.
   - Exact log-likelihood belief updating with numerical stability tricks (LogSumExp).
   - Shannon Entropy $\mathcal{H}(b_t)$, normalized uncertainty, and maximum a posteriori (MAP) rule extractor.
-- [ ] Implement `src/models/ensemble_world_model.py`:
+- [x] Implement `src/models/ensemble_world_model.py`:
   - PyTorch-based epistemic deep ensemble for continuous dynamics prediction.
-- [ ] Tests: `tests/test_belief_tracker.py` (Verify Bayes update correctness, entropy monotonicity, edge cases).
+- [x] Tests: `tests/test_belief_tracker.py` (Verify Bayes update correctness, entropy monotonicity, edge cases).
 
 ---
 
