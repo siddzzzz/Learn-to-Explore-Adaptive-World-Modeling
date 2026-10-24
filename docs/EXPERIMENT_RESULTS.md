@@ -85,3 +85,26 @@ We evaluated **HEx-WM** across four rigorous benchmark experiments designed to s
 ### Key Metrics
 - **Mean Squared Error (MSE)**: **0.1834** across holdout goal targets.
 - Proves zero-shot transferability of the learned world model without requiring retraining.
+
+---
+
+## Benchmark 5: Real-World Automated Chemical Reactor (Self-Driving Lab)
+
+### Protocol
+- **Application**: Automated batch chemical synthesis with non-linear continuous ODE kinetics (Arrhenius thermal rate laws).
+- **Competitors**:
+  1. **HEx-WM (Ours)**: Active hypothesis testing over 4 candidate reaction pathways.
+  2. **Bayesian Optimization (GP-BO)**: Current industry standard in automated chemistry (Matern 5/2 GP + UCB).
+  3. **Random Search**: Traditional screening.
+- **Budget**: Only 5 batch trials allowed during discovery.
+- **Real-World Test**: Customer orders pure medicine ($C_P \ge 1.8\text{ M}$, $C_W < 0.2\text{ M}$) with strict safety constraint ($T \le 380\text{ K}$).
+
+### Head-to-Head Comparison
+| System | Discovered Model | Operating Temp | Safety Limit (<380K) | Target Product P | Toxic Waste W | Purity (%) | Overall Status |
+|---|---|---|---|---|---|---|---|
+| **HEx-WM (Ours)** | **Thermal Cracking ($H_3$, 100% conf)** | **317.7 K** | **PASS** | **3.65 M** | **0.02 M** | **99.5%** | **SUCCESS** |
+| **Bayesian Opt (GP-BO)** | None (Black-box interpolator) | 403.9 K | **FAIL** (Thermal Overload) | 1.46 M | 0.80 M | 64.6% | **FAILED** |
+| **Random Search** | None | 440.8 K | **FAIL** (Overshoot) | 0.11 M | 3.78 M | 2.7% | **FAILED** |
+
+> **Figure 4**: Saved at `benchmarks/figures/fig4_chemical_reactor_benchmark.png`. Shows rapid entropy collapse to zero in 5 batches (Panel A) and 99.5% purity synthesis under strict safety limits while Bayesian Optimization fails (Panel B).
+
