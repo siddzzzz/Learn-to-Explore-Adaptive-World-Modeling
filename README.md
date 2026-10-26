@@ -43,13 +43,31 @@ For the detailed implementation roadmap, see [`ROADMAP.md`](ROADMAP.md).
 ## Quickstart
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 pip install -e .
 
-# Run all verification tests
+# 2. Launch the Interactive Scientific Studio (Dashboard)
+streamlit run app.py
+# (or: python run_dashboard.py)
+
+# 3. Run all verification tests (25 tests passing)
 pytest -v
 
-# Run the benchmark suite
-python benchmarks/run_entropy_benchmark.py
-python benchmarks/run_noisy_tv_benchmark.py
+# 4. Run the benchmark suite
+python benchmarks/run_chemical_lab_benchmark.py  # Real-world Self-Driving Lab benchmark
+python benchmarks/run_entropy_benchmark.py       # Sample efficiency benchmark
+python benchmarks/run_noisy_tv_benchmark.py      # Noisy TV (Theorem 1) benchmark
+python benchmarks/run_rule_mutation.py           # Non-stationary adaptation benchmark
+python benchmarks/run_zero_shot_planning.py      # Downstream task planning
 ```
+
+---
+
+## Interactive Scientific Studio (`app.py`)
+
+The repository includes a live Streamlit visualizer for interactive experimentation:
+1. **Chemical Reactor Studio**: Run autonomous batch discovery or manually turn reactor knobs (temperature, feeds, duration) and observe real-time Bayesian belief updates.
+2. **Live Rule Mutation Cockpit**: Silently swap reaction kinetics mid-run to test real-time anomaly detection and rapid recovery.
+3. **Zero-Shot Synthesis Challenge**: Configure custom drug manufacturing orders with strict thermal safety constraints and test physical synthesis against Bayesian Optimization.
+4. **Causal Lab Explorer**: Interactively test Pearl's do-operator $\text{do}(X_i = v)$ on DAG networks and inspect the Noisy TV aleatoric channel.
+5. **Benchmark & Paper Results**: Explore high-resolution figures and download raw benchmark JSON data.

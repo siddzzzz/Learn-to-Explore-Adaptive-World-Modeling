@@ -84,10 +84,21 @@
 
 ---
 
-### Git Commit Strategy
-- **Commit 1**: `feat(core): theoretical foundations, math derivation, and research roadmap`
-- **Commit 2**: `feat(envs): causal lab gymnasium benchmark with exact SCM and Noisy TV`
-- **Commit 3**: `feat(models): Bayesian belief tracker and epistemic dynamics models`
-- **Commit 4**: `feat(planning): contrastive acquisition functions and non-myopic CEM planner`
-- **Commit 5**: `feat(agents): HEx-WM active discovery agent and baseline implementations`
-- **Commit 6**: `feat(benchmarks): empirical evaluation suite, figures, and experimental results`
+### [x] Phase 6: Interactive Scientific Studio (Streamlit Web Dashboard)
+- [x] **Commit 1**: Dashboard Architecture & Configuration (`src/dashboard/config.py`, `src/dashboard/__init__.py`)
+- [x] **Commit 2**: Session State Engine for Live Simulation (`src/dashboard/state_engine.py`)
+- [x] **Commit 3**: Interactive Plotly Visualizers (`src/dashboard/plots.py`)
+- [x] **Commit 4**: Chemical Reactor Experiment Studio Page (`src/dashboard/pages/reactor_studio.py`)
+- [x] **Commit 5**: Live Rule Mutation Cockpit (`src/dashboard/pages/mutation_cockpit.py`)
+- [x] **Commit 6**: Zero-Shot Synthesis Challenge Page (`src/dashboard/pages/synthesis_challenge.py`)
+- [x] **Commit 7**: Causal Lab DAG Explorer (`src/dashboard/pages/causal_studio.py`)
+- [x] **Commit 8**: Benchmark Explorer & Publication Results Viewer (`src/dashboard/pages/benchmark_viewer.py`)
+- [x] **Commit 9**: Streamlit Main Entrypoint & Unit Tests (`app.py`, `run_dashboard.py`, `tests/test_dashboard.py`)
+- [x] **Commit 10**: Documentation & Quickstart Integration (`README.md`, `ROADMAP.md`)
+
+---
+
+### Next Research Phases
+- [ ] **Phase 7: End-to-End Neural Causal Induction (Differentiable Neural World Models)**
+- [ ] **Phase 8: Safety-Constrained Bayesian Experimental Design (Safe-HEx-WM)**
+- [ ] **Phase 9: Complete Conference Paper LaTeX Submission Package (`paper/`)**
