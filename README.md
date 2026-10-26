@@ -18,7 +18,13 @@ Modern reinforcement learning agents often explore using heuristic novelty (ICM,
 3. **Non-Myopic Trajectory Planning**: Employs Cross-Entropy Method (CEM) and Model Predictive Path Integral (MPPI) control to sequence prerequisite actions that set up decisive experiments.
 4. **Adaptive Exploitation**: Seamlessly transitions from scientific exploration to goal-directed execution, rapidly detecting and recovering from unannounced rule mutations.
 
-For complete mathematical derivations and proofs, see [`docs/RESEARCH_FOUNDATIONS.md`](docs/RESEARCH_FOUNDATIONS.md).  
+5. **End-to-End Neural Causal Induction**: Learns continuous causal DAG structures from scratch without predefined hypothesis menus via NOTEARS continuous acyclicity constraints $h(W) = \text{Tr}(\exp(W \circ W)) - d$ and active Contrastive Graph Discrepancy (CGD).
+
+For complete mathematical derivations and proofs, see:
+- [`docs/RESEARCH_FOUNDATIONS.md`](docs/RESEARCH_FOUNDATIONS.md) (Analytical Bayesian Foundations & Theorem 1 Proof)
+- [`docs/NEURAL_CAUSAL_INDUCTION.md`](docs/NEURAL_CAUSAL_INDUCTION.md) (Differentiable Neural Causal World Models & Acyclicity)
+- [`docs/EXPERIMENT_RESULTS.md`](docs/EXPERIMENT_RESULTS.md) (Full Empirical Benchmark Report)
+
 For the detailed implementation roadmap, see [`ROADMAP.md`](ROADMAP.md).
 
 ---
@@ -29,13 +35,16 @@ For the detailed implementation roadmap, see [`ROADMAP.md`](ROADMAP.md).
 ├── docs/                     # Mathematical proofs, derivations & research foundations
 ├── src/
 │   ├── envs/                 # Gymnasium environments with latent SCMs & Noisy TV
-│   │   └── causal_lab/       # Analytical Causal DAG benchmark (closed-form Bayes optimality)
-│   ├── models/               # Bayesian belief trackers & epistemic dynamics models
-│   ├── planning/             # Non-myopic CEM / MPPI planners & CHD acquisition metrics
-│   └── agents/               # HEx-WM and baselines (Plan2Explore, ICM, Random, Oracle)
-├── tests/                    # Unit, statistical, and mathematical correctness tests
-├── benchmarks/               # Reproducible benchmark experiments and figure generators
-└── configs/                  # Experiment configurations
+│   │   ├── causal_lab/       # Analytical Causal DAG benchmark (closed-form Bayes optimality)
+│   │   └── chemical_reactor/ # Continuous batch chemical reactor (Self-Driving Lab)
+│   ├── models/               # World models, Bayesian belief trackers & deep ensembles
+│   │   └── causal/           # Differentiable Neural SCMs & Gumbel-Softmax DAG posterior
+│   ├── planning/             # Non-myopic CEM / MPPI planners & CHD/CGD acquisition metrics
+│   ├── agents/               # HEx-WM, Neural Causal Agent & Baselines (GP-BO, ICM, Plan2Explore)
+│   └── dashboard/            # Interactive Streamlit scientific studio & Plotly visualizers
+├── tests/                    # 31 unit, statistical, and mathematical correctness tests
+├── benchmarks/               # Reproducible benchmark experiments and publication figures
+└── app.py                    # Multi-page interactive Streamlit research studio
 ```
 
 ---

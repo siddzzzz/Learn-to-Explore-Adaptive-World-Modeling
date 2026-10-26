@@ -98,7 +98,20 @@
 
 ---
 
+### [x] Phase 7: End-to-End Neural Causal Induction (Differentiable Neural World Models)
+- [x] **Commit 1**: Mathematical formulation & theory document (`docs/NEURAL_CAUSAL_INDUCTION.md`)
+- [x] **Commit 2**: NOTEARS continuous acyclicity constraint & graph utilities (`src/models/causal/dag_utils.py`)
+- [x] **Commit 3**: Variational graph posterior with Gumbel-Softmax sampling (`src/models/causal/graph_posterior.py`)
+- [x] **Commit 4**: Modular Neural SCM with Pearl do-operator masking (`src/models/causal/neural_scm.py`)
+- [x] **Commit 5**: Differentiable causal world model unifying posterior & dynamics (`src/models/causal/causal_world_model.py`)
+- [x] **Commit 6**: Contrastive Graph Discrepancy (CGD) acquisition metric (`src/planning/causal_acquisition.py`)
+- [x] **Commit 7**: End-to-end neural causal agent (`src/agents/neural_causal_agent.py`)
+- [x] **Commit 8**: Unit test suite for neural causal discovery (`tests/test_neural_causal.py`)
+- [x] **Commit 9**: Package exports integration (`src/models/causal/__init__.py`, `src/models/__init__.py`, `src/agents/__init__.py`)
+- [x] **Commit 10**: Documentation & Roadmap update (`README.md`, `ROADMAP.md`)
+
+---
+
 ### Next Research Phases
-- [ ] **Phase 7: End-to-End Neural Causal Induction (Differentiable Neural World Models)**
 - [ ] **Phase 8: Safety-Constrained Bayesian Experimental Design (Safe-HEx-WM)**
 - [ ] **Phase 9: Complete Conference Paper LaTeX Submission Package (`paper/`)**
