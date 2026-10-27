@@ -1,0 +1,73 @@
+\appendix
+\section{Supplementary Mathematical Derivations and Proofs}
+\label{app:proofs}
+
+\subsection{Proof of Theorem 1: Immunity of CHD to Additive Aleatoric Distraction}
+\label{app:proof_thm1}
+
+Let the predictive distribution of state transitions under hypothesis $\theta_k$ be modeled as a Gaussian density:
+\begin{equation}
+    p(s' \mid s, a, \theta_k) = \mathcal{N}\left( s'; \mu_k(s, a), \, \Sigma_{\text{phys}} + \Sigma_{\text{noise}} \right),
+\end{equation}
+where $\mu_k(s, a) = f_{\theta_k}(s, a)$ is the deterministic hypothesis output, $\Sigma_{\text{phys}}$ is the physical environmental stochasticity, and $\Sigma_{\text{noise}} = \sigma^2 I$ represents the covariance of the independent, additive aleatoric distractor (e.g., the Noisy TV screen).
+
+For any pair of hypotheses $(i, j)$, the Kullback-Leibler divergence between two Gaussians with identical covariance $\Sigma = \Sigma_{\text{phys}} + \sigma^2 I$ is given by:
+\begin{align}
+    D_{\text{KL}}\left( p_i \,||\, p_j \right) &= \frac{1}{2} \left[ \text{Tr}\left(\Sigma^{-1} \Sigma\right) + (\mu_j - \mu_i)^\top \Sigma^{-1} (\mu_j - \mu_i) - d + \ln\frac{|\Sigma|}{|\Sigma|} \right] \nonumber \\
+    &= \frac{1}{2} (\mu_j - \mu_i)^\top \left( \Sigma_{\text{phys}} + \sigma^2 I \right)^{-1} (\mu_j - \mu_i).
+\end{align}
+Notice that the noise covariance $\Sigma_{\text{noise}} = \sigma^2 I$ enters strictly in the inverse precision matrix. Taking the derivative with respect to the noise variance $\sigma^2$:
+\begin{equation}
+    \frac{\partial}{\partial \sigma^2} D_{\text{KL}}\left( p_i \,||\, p_j \right) = -\frac{1}{2} (\mu_j - \mu_i)^\top \left( \Sigma_{\text{phys}} + \sigma^2 I \right)^{-2} (\mu_j - \mu_i) \le 0.
+\end{equation}
+Because the Contrastive Hypothesis Discrepancy $r_{\text{CHD}}(s, a)$ is the generalized Jensen-Shannon divergence:
+\begin{equation}
+    r_{\text{CHD}}(s, a) = \sum_{k=1}^K b_t(\theta_k) D_{\text{KL}}\left( p_k \,||\, \bar{p} \right) \le \sum_{i < j} b_t(\theta_i) b_t(\theta_j) D_{\text{KL}}(p_i \,||\, p_j),
+\end{equation}
+it follows directly that:
+\begin{equation}
+    \frac{\partial r_{\text{CHD}}}{\partial \sigma^2} \le 0, \quad \text{and} \quad \lim_{\sigma^2 \to \infty} r_{\text{CHD}}(s, a) = 0.
+\end{equation}
+In contrast, consider an exploration bonus based on prediction error, such as the Intrinsic Curiosity Module (ICM) \citep{pathak2017curiosity}:
+\begin{align}
+    r_{\text{ICM}}(s, a) &= \| s' - \hat{s}' \|^2 = \| f(s, a) + \epsilon_{\text{phys}} + \xi_{\text{noise}} - \hat{f}(s, a) \|^2.
+\end{align}
+Taking the expectation with respect to the noise:
+\begin{align}
+    \mathbb{E}[r_{\text{ICM}}(s, a)] &= \| f(s, a) - \hat{f}(s, a) \|^2 + \text{Tr}(\Sigma_{\text{phys}}) + \text{Tr}(\Sigma_{\text{noise}}) \nonumber \\
+    &= \| f(s, a) - \hat{f}(s, a) \|^2 + \text{Tr}(\Sigma_{\text{phys}}) + d \cdot \sigma^2.
+\end{align}
+As $\sigma^2 \to \infty$, $\mathbb{E}[r_{\text{ICM}}] \to \infty$. The curiosity agent's reward is dominated by the noise channel, trapping it permanently at the Noisy TV. HEx-WM's contrastive ratio completely immunizes the agent from this failure mode. \qed
+
+\subsection{Proof of Theorem 2: Forward Invariance under Epistemic Ambiguity}
+\label{app:proof_thm2}
+
+Let $h_m: \mathcal{S} \to \mathbb{R}$ be a continuously differentiable Control Barrier Function defining the safe set $\mathcal{C}_m = \{s \in \mathcal{S} \mid h_m(s) \ge 0\}$.
+
+At state $s_t$, executing action $a_t$ yields a random next state $s_{t+1}$ governed by the mixture dynamics $p(s_{t+1} \mid s_t, a_t)$. Consider the random variable $Y_m = h_m(s_{t+1})$, with mean $\mu_{h, m} = \mathbb{E}[Y_m]$ and variance $\sigma_{h, m}^2 = \text{Var}(Y_m)$.
+
+Cantelli's inequality (the one-sided Chebyshev bound) states that for any real random variable $Y$ and any positive constant $\lambda > 0$:
+\begin{equation}
+    P\left( Y - \mu_Y \le -\lambda \right) \le \frac{\sigma_Y^2}{\sigma_Y^2 + \lambda^2}.
+\end{equation}
+We wish to ensure that with probability at least $1 - \delta$, the discrete-time barrier condition holds:
+\begin{equation}
+    P\left( Y_m \ge (1 - \alpha) h_m(s_t) \right) \ge 1 - \delta.
+\end{equation}
+Setting the violation probability bound:
+\begin{equation}
+    \frac{\sigma_{h, m}^2}{\sigma_{h, m}^2 + \lambda^2} = \delta \implies \lambda = \sigma_{h, m} \sqrt{\frac{1 - \delta}{\delta}}.
+\end{equation}
+Therefore, with probability at least $1 - \delta$:
+\begin{equation}
+    Y_m \ge \mu_{h, m} - \lambda = \mu_{h, m} - \sigma_{h, m} \sqrt{\frac{1 - \delta}{\delta}} \equiv \text{LCB}_{h, m}(s_t, a_t).
+\end{equation}
+If the planner restricts its action selection to those satisfying $\text{LCB}_{h, m}(s_t, a_t) \ge (1 - \alpha) h_m(s_t)$, then:
+\begin{equation}
+    P\left( h_m(s_{t+1}) \ge (1 - \alpha) h_m(s_t) \right) \ge 1 - \delta.
+\end{equation}
+Since $s_t \in \mathcal{C}$, we have $h_m(s_t) \ge 0$. With $\alpha \in (0, 1]$, $(1 - \alpha) h_m(s_t) \ge 0$. Consequently:
+\begin{equation}
+    h_m(s_{t+1}) \ge (1 - \alpha) h_m(s_t) \ge 0 \implies s_{t+1} \in \mathcal{C}_m.
+\end{equation}
+Taking the intersection over all $M$ barrier constraints via Boole's inequality or joint evaluation ensures that the entire safe set $\mathcal{C} = \bigcap_{m=1}^M \mathcal{C}_m$ is forward invariant with probability at least $1 - \delta$. \qed
