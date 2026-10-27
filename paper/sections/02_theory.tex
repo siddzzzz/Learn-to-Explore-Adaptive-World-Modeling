@@ -1,0 +1,47 @@
+\section{Problem Formulation \& Theoretical Foundations}
+\label{sec:theory}
+
+\subsection{The Epistemic POMDP}
+We formalize scientific active exploration as an \textbf{Epistemic Partially Observable Markov Decision Process}:
+\begin{equation}
+    \mathcal{M}_{\text{epi}} = \langle \mathcal{S}, \mathcal{A}, \Theta, \mathcal{T}_\theta, \Omega, \mathcal{O}, \gamma \rangle,
+\end{equation}
+where $\mathcal{S} \subseteq \mathbb{R}^{d_s}$ is the observable physical state space, $\mathcal{A} \subseteq \mathbb{R}^{d_a}$ is the continuous action/intervention space, and $\Theta = \{\theta_1, \dots, \theta_K\}$ is the parameter or hypothesis space indexing candidate Structural Causal Models (SCMs) \citep{pearl2009causality}. The true parameter $\theta^* \in \Theta$ is fixed but unobservable. The transition dynamics $\mathcal{T}_\theta(s_{t+1} \mid s_t, a_t) = p(s_{t+1} \mid s_t, a_t, \theta)$ govern environment evolution under hypothesis $\theta$. The observation space $\Omega = \mathcal{S} \times \mathcal{Z}$ emits physical states augmented by an uncontrollable, additive aleatoric noise process $\xi_t \sim \mathcal{N}(0, \Sigma_{\text{noise}})$.
+
+The agent maintains an explicit Bayesian belief state $b_t \in \Delta^{K-1}$:
+\begin{equation}
+    b_t(\theta) = P(\theta = \theta_k \mid \mathcal{D}_t), \quad \mathcal{D}_t = \{(s_\tau, a_\tau, s_{\tau+1})\}_{\tau=0}^{t-1}.
+\end{equation}
+
+\subsection{Contrastive Hypothesis Discrepancy (CHD)}
+Under the principle of Bayesian Experimental Design \citep{lindley1956measure}, the optimal exploratory action maximizes the Expected Information Gain (EIG) over the hypothesis distribution:
+\begin{equation}
+    \text{EIG}(s, a) = \mathcal{H}(b_t) - \mathbb{E}_{s' \sim p(s' \mid s, a, b_t)} \left[ \mathcal{H}(b_{t+1}(s')) \right] = I(\theta; s' \mid s, a, b_t).
+\end{equation}
+Computing exact mutual information in continuous state spaces is computationally intractable. We introduce the \textbf{Contrastive Hypothesis Discrepancy} (CHD), defined as the weighted Jensen-Shannon divergence among the predictive distributions of candidate hypotheses:
+\begin{equation}
+    r_{\text{CHD}}(s, a) = D_{\text{JS}}^{b_t}\left( \{p(s' \mid s, a, \theta_k)\}_{k=1}^K \right) = \sum_{k=1}^K b_t(\theta_k) D_{\text{KL}}\left( p(s' \mid s, a, \theta_k) \,||\, \bar{p}(s' \mid s, a) \right),
+\end{equation}
+where $\bar{p}(s' \mid s, a) = \sum_{k=1}^K b_t(\theta_k) p(s' \mid s, a, \theta_k)$ denotes the mixture marginal predictive distribution.
+
+\subsection{Aleatoric Invariance (Theorem 1)}
+
+\begin{theorem}[Immunity to Aleatoric Distraction]
+\label{thm:noisy_tv}
+Let the observed transition be corrupted by an additive, independent aleatoric noise channel:
+\begin{equation}
+    s'_{k} = f_{\theta_k}(s, a) + \epsilon_{\text{phys}} + \xi_{\text{noise}}, \quad \xi_{\text{noise}} \sim \mathcal{N}(0, \Sigma_{\text{noise}}),
+\end{equation}
+where $\Sigma_{\text{noise}}$ is strictly non-zero and identical across hypotheses. Then, as $\Sigma_{\text{noise}} \to \infty$, the Contrastive Hypothesis Discrepancy remains strictly bounded by the deterministic model divergence and asymptotically satisfies:
+\begin{equation}
+    \lim_{\Sigma_{\text{noise}} \to \infty} r_{\text{CHD}}(s, a) = 0, \quad \text{for uninformative noise, while} \quad \frac{\partial r_{\text{CHD}}}{\partial \Sigma_{\text{noise}}} \le 0.
+\end{equation}
+Conversely, heuristic curiosity metrics (ICM, Plan2Explore) diverge with $\Sigma_{\text{noise}}$:
+\begin{equation}
+    \mathbb{E}[r_{\text{ICM}}(s, a)] \ge \text{Tr}(\Sigma_{\text{noise}}), \quad \lim_{\text{Tr}(\Sigma_{\text{noise}}) \to \infty} r_{\text{ICM}}(s, a) = \infty.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+See Section~\ref{app:proof_thm1} of the Supplementary Material. The intuition follows from the translation invariance of relative entropy: additive noise common to all hypothesis channels shifts the marginal and conditional distributions equally, canceling out to zero divergence in the contrastive difference $\log p(s' \mid \theta_i) - \log p(s' \mid \theta_j)$.
+\end{proof}
