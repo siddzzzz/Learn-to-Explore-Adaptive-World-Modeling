@@ -112,6 +112,25 @@
 
 ---
 
-### Next Research Phases
-- [ ] **Phase 8: Safety-Constrained Bayesian Experimental Design (Safe-HEx-WM)**
+### [x] Phase 8: Safety-Constrained Bayesian Experimental Design (Safe-HEx-WM)
+- [x] **Commit 1**: Mathematical formulation & Theorem 2 proof of Forward Invariance under Cantelli LCB (`docs/SAFE_EXPLORATION_THEORY.md`)
+- [x] **Commit 2**: Control Barrier Functions (CBFs) & safe boundary specifications (`src/safety/barrier_function.py`)
+- [x] **Commit 3**: Epistemic Safety Filter with distribution-free Cantelli Lower Confidence Bound (`src/safety/epistemic_safety_filter.py`)
+- [x] **Commit 4**: Safe Trajectory CEM Planner with dynamic rejection & penalization (`src/safety/safe_trajectory_cem.py`)
+- [x] **Commit 5**: Safe-HEx-WM Agent integrating active epistemic BED and provable CBF guarantees (`src/safety/safe_hex_agent.py`)
+- [x] **Commit 6**: Comprehensive pytest suite for CBF bounds, epistemic filtering, and SafeHExWMAgent (`tests/test_safety.py`)
+- [x] **Commit 7**: Safety module public API exports and agent registration (`src/safety/__init__.py`, `src/agents/__init__.py`)
+- [x] **Commit 8**: Interactive Plotly visualizers for safety barrier gauge and safe action envelope (`src/dashboard/plots.py`)
+- [x] **Commit 9**: Demonstration script comparing unconstrained vs safe exploration (`benchmarks/run_safe_exploration_demo.py`)
+- [x] **Commit 10**: Documentation & Roadmap integration (`ROADMAP.md`, `README.md`)
+
+---
+
+### Next Research Phase
 - [ ] **Phase 9: Complete Conference Paper LaTeX Submission Package (`paper/`)**
+  - [ ] NeurIPS 2026 style configuration (`paper/neurips_2026.sty`)
+  - [ ] Rigorous academic bibliography (`paper/references.bib`)
+  - [ ] Core manuscript structure (`paper/main.tex`): Abstract, Introduction, Epistemic POMDP, Theorems 1 & 2, Safe-HEx-WM, Empirical Benchmarks, and Societal Impact
+  - [ ] Algorithmic pseudocodes for HEx-WM and Safe-HEx-WM
+  - [ ] Supplementary material: complete mathematical derivations and proofs
+
