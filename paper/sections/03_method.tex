@@ -1,0 +1,50 @@
+\section{Methodology: HEx-WM and Safe-HEx-WM}
+\label{sec:method}
+
+\subsection{Non-Myopic Bayesian Experimental Design via Safe-CEM}
+Decisive experiments often require setting up specific physical states before applying a critical test intervention. We deploy a multi-step Cross-Entropy Method (CEM) planner over action trajectories $\mathbf{A} = (a_t, a_{t+1}, \dots, a_{t+H-1})$ with horizon $H$.
+
+The cumulative trajectory information acquisition objective is:
+\begin{equation}
+    J(\mathbf{A}; s_t) = \sum_{\tau=0}^{H-1} \gamma^\tau r_{\text{CHD}}(\hat{s}_{t+\tau}, a_{t+\tau}) - \lambda_{\text{cost}} \|a_{t+\tau}\|^2,
+\end{equation}
+where imagined next states $\hat{s}_{t+\tau+1}$ are rolled out according to the mixture belief dynamics $\bar{p}(s' \mid \hat{s}_{t+\tau}, a_{t+\tau})$.
+
+\subsection{Safety-Constrained Exploration (Safe-HEx-WM)}
+In safety-critical physical systems, exploration must respect strict state constraints. Let the safe operating envelope be defined by $M$ Control Barrier Functions (CBFs) \citep{ames2019control}:
+\begin{equation}
+    \mathcal{C} = \left\{ s \in \mathcal{S} \;\Big|\; h_m(s) \ge 0, \; \forall m \in \{1, \dots, M\} \right\}.
+\end{equation}
+Under discrete-time dynamics, forward invariance of $\mathcal{C}$ requires:
+\begin{equation}
+    h_m(s_{t+1}) - h_m(s_t) \ge -\alpha h_m(s_t) \iff h_m(s_{t+1}) \ge (1 - \alpha) h_m(s_t), \quad \alpha \in (0, 1].
+\end{equation}
+
+When the true dynamics $s_{t+1} \sim \mathcal{T}_{\theta^*}(s_t, a_t)$ are uncertain, $h_m(s_{t+1})$ is a random variable across the candidate hypothesis ensemble.
+
+\begin{definition}[Cantelli Epistemic Lower Confidence Bound]
+For each barrier $h_m$, let $\mu_{h, m}(s, a) = \mathbb{E}_{\theta \sim b_t}[h_m(\hat{s}')]$ and $\sigma_{h, m}^2(s, a) = \text{Var}_{\theta \sim b_t}[h_m(\hat{s}')]$. For a user-specified risk tolerance $\delta \in (0, 0.5]$, the distribution-free Cantelli Lower Confidence Bound (LCB) is:
+\begin{equation}
+    \text{LCB}_{h, m}(s, a) = \mu_{h, m}(s, a) - \sqrt{\frac{1 - \delta}{\delta}} \, \sigma_{h, m}(s, a).
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Forward Invariance under Epistemic Ambiguity]
+\label{thm:safe_exploration}
+If candidate actions $a_t$ are constrained to satisfy:
+\begin{equation}
+    \min_{m \in \{1,\dots,M\}} \left[ \text{LCB}_{h, m}(s_t, a_t) - (1 - \alpha) h_m(s_t) \right] \ge 0,
+\end{equation}
+then for any probability distribution over hypothesis transitions, the safe set $\mathcal{C}$ is forward invariant with probability at least $1 - \delta$:
+\begin{equation}
+    P\left( s_{t+1} \in \mathcal{C} \;\big|\; s_t \in \mathcal{C} \right) \ge 1 - \delta.
+\end{equation}
+Furthermore, as active experimentation resolves epistemic uncertainty ($\sigma_{h, m} \to 0$), the certifiable safe exploration volume monotonically expands:
+\begin{equation}
+    \lim_{\sigma_{h, m} \to 0} \text{LCB}_{h, m}(s, a) = \mu_{h, m}(s, a) = h_m(f_{\theta^*}(s, a)).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+See Section~\ref{app:proof_thm2} of the Supplementary Material. The proof follows directly from Cantelli's one-sided Chebyshev inequality without requiring Gaussianity assumptions on the dynamics residuals.
+\end{proof}
