@@ -182,3 +182,87 @@ def plot_batch_yields(experiments: List[Dict[str, Any]]) -> go.Figure:
         height=240
     )
     return fig
+
+
+def plot_safety_barrier_gauge(
+    cbf_value: float,
+    threshold: float = 0.0,
+    title: str = "Control Barrier Function h(s)",
+) -> go.Figure:
+    """Renders a gauge showing current barrier margin and safety boundary."""
+    color = PALETTE["hex_wm"] if cbf_value >= threshold else PALETTE["danger"]
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=cbf_value,
+        domain=dict(x=[0, 1], y=[0, 1]),
+        title=dict(text=f"<b>{title}</b>", font=dict(color=PALETTE["text_main"], size=14)),
+        number=dict(font=dict(color=color, size=24), valueformat=".2f"),
+        gauge=dict(
+            axis=dict(range=[-1.0, 1.0], tickcolor=PALETTE["text_muted"], tickfont=dict(color=PALETTE["text_muted"])),
+            bar=dict(color=color),
+            steps=[
+                dict(range=[-1.0, 0.0], color="rgba(239, 68, 68, 0.25)"),
+                dict(range=[0.0, 1.0], color="rgba(16, 185, 129, 0.20)"),
+            ],
+            threshold=dict(
+                line=dict(color=PALETTE["danger"], width=4),
+                thickness=0.8,
+                value=threshold,
+            ),
+        ),
+    ))
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(color=PALETTE["text_main"]),
+        margin=dict(l=20, r=20, t=40, b=20),
+        height=200,
+    )
+    return fig
+
+
+def plot_safe_action_envelope(
+    nominal_actions: np.ndarray,
+    safe_actions: np.ndarray,
+    is_safe: np.ndarray,
+    action_dims: tuple[int, int] = (0, 1),
+) -> go.Figure:
+    """Plots sampled exploration actions and their epistemic barrier classification."""
+    dim_x, dim_y = action_dims
+    nom = np.asarray(nominal_actions)
+    safe = np.asarray(safe_actions)
+    mask = np.asarray(is_safe, dtype=bool)
+
+    fig = go.Figure()
+
+    # Rejected / Unsafe candidates
+    if np.any(~mask):
+        fig.add_trace(go.Scatter(
+            x=nom[~mask, dim_x],
+            y=nom[~mask, dim_y],
+            mode="markers",
+            name="Epistemically Hazardous (Filtered)",
+            marker=dict(color=PALETTE["danger"], symbol="x", size=8, opacity=0.7),
+        ))
+
+    # Safe Candidates
+    if np.any(mask):
+        fig.add_trace(go.Scatter(
+            x=nom[mask, dim_x],
+            y=nom[mask, dim_y],
+            mode="markers",
+            name="Safe Envelope Action",
+            marker=dict(color=PALETTE["hex_wm"], symbol="circle", size=8, opacity=0.8),
+        ))
+
+    fig.update_layout(
+        title=dict(text="<b>Safe Action Envelope & Epistemic Filter Projection</b>", font=dict(color=PALETTE["text_main"], size=14)),
+        xaxis=dict(title=f"Action Dim {dim_x}", gridcolor="rgba(255, 255, 255, 0.08)", tickfont=dict(color=PALETTE["text_muted"])),
+        yaxis=dict(title=f"Action Dim {dim_y}", gridcolor="rgba(255, 255, 255, 0.08)", tickfont=dict(color=PALETTE["text_muted"])),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        legend=dict(font=dict(color=PALETTE["text_main"])),
+        margin=dict(l=20, r=20, t=40, b=30),
+        height=260,
+    )
+    return fig
+
