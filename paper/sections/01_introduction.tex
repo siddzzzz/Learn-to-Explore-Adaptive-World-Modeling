@@ -1,0 +1,16 @@
+\section{Introduction}
+\label{sec:intro}
+
+Autonomous agents operating in unfamiliar or safety-critical scientific domains face a fundamental dilemma: discovering the latent physical mechanisms governing their environment requires exploratory intervention, yet naive trial-and-error risks catastrophic failure or entrapment in stochastic noise distractors. In contemporary model-based reinforcement learning (MBRL) and curiosity-driven exploration, exploration bonuses typically rely on one-step prediction errors \citep{pathak2017curiosity}, random feature projection divergence \citep{burda2018exploration}, or ensemble variance \citep{sekar2020planning}.
+
+While effective in noiseless video games, these heuristic objectives collapse when faced with the \emph{Noisy TV pathology}---a setting where an agent fixates indefinitely on uncontrollable aleatoric noise sources. Furthermore, existing world model exploration paradigms lack explicit representation of competing structural mechanisms, rendering them incapable of purposeful, scientific hypothesis testing. When applied to real-world self-driving laboratories, such unprincipled exploratory policies can induce thermal runaways, reactor explosions, or toxic byproduct contamination.
+
+In this work, we propose \textbf{HEx-WM} (\textbf{H}ypothesis-\textbf{Ex}perimenting \textbf{W}orld \textbf{M}odels) and its safety-guaranteed extension \textbf{Safe-HEx-WM}. We ground active exploration in the rigorous mathematical framework of Sequential Bayesian Experimental Design (sBED) \citep{lindley1956measure} over an Epistemic Partially Observable Markov Decision Process (Epistemic POMDP). 
+
+Our primary contributions are fourfold:
+\begin{enumerate}
+    \item \textbf{Epistemic POMDP \& Contrastive Discrepancy}: We derive the \emph{Contrastive Hypothesis Discrepancy} (CHD) acquisition metric using the generalized Jensen-Shannon divergence over predictive distributions. In \textbf{Theorem 1}, we formally prove that CHD achieves mathematical immunity to additive aleatoric noise channels.
+    \item \textbf{Non-Myopic Bayesian Experimental Design}: We design a trajectory-level Cross-Entropy Method (CEM) and Model Predictive Path Integral (MPPI) planner that sequences multi-step prerequisite actions to execute decisive, hypothesis-discriminating experiments.
+    \item \textbf{End-to-End Neural Causal Induction}: We formulate a fully differentiable causal world model combining the continuous NOTEARS acyclicity constraint \citep{zheng2018dags} with a variational Gumbel-Softmax graph posterior \citep{jang2017categorical}, enabling open-ended structural discovery without predefined hypothesis candidate sets.
+    \item \textbf{Safety-Constrained Exploration (Safe-HEx-WM)}: We incorporate Control Barrier Functions (CBFs) \citep{ames2019control} equipped with distribution-free Cantelli Lower Confidence Bounds (LCB). In \textbf{Theorem 2}, we prove that Safe-HEx-WM guarantees forward invariance of the operational safe set with probability $\ge 1 - \delta$ while monotonically expanding its exploration envelope as epistemic uncertainty is resolved.
+\end{enumerate}
