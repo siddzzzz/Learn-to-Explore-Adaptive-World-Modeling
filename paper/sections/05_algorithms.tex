@@ -1,0 +1,38 @@
+\begin{algorithm}[t]
+\caption{Safe-HEx-WM: Safety-Constrained Bayesian Experimental Design}
+\label{alg:safe_hex_wm}
+\begin{algorithmic}[1]
+\REQUIRE Hypothesis ensemble $\mathcal{H} = \{\theta_k\}_{k=1}^K$, Control Barrier Functions $\{h_m\}_{m=1}^M$, Risk tolerance $\delta \in (0, 0.5]$, CBF decay $\alpha \in (0, 1]$, Planning horizon $H$, Candidate sequences $N$, Elite ratio $\rho$.
+\STATE Initialize prior belief $b_0(\theta_k) \leftarrow \frac{1}{K}$ for all $k \in \{1, \dots, K\}$.
+\STATE Initialize dataset $\mathcal{D} \leftarrow \emptyset$, time step $t \leftarrow 0$.
+\WHILE{exploration budget remaining}
+    \STATE Receive physical state observation $s_t \in \mathcal{S}$.
+    \STATE Evaluate current barrier safety: $h_m(s_t)$ for $m \in \{1, \dots, M\}$.
+    \STATE Initialize sampling distribution for actions: $\mathcal{N}(\mu_{0:H-1}, \Sigma_{0:H-1})$.
+    \FOR{$\text{iter} = 1$ \textbf{to} $N_{\text{CEM}}$}
+        \STATE Sample $N$ action trajectory candidates: $\mathbf{A}^{(i)} \sim \mathcal{N}(\mu, \Sigma), \; i \in \{1, \dots, N\}$.
+        \FOR{each candidate trajectory $\mathbf{A}^{(i)} = (a_0^{(i)}, \dots, a_{H-1}^{(i)})$}
+            \STATE Set imagined state $\hat{s}_0 \leftarrow s_t$, score $J^{(i)} \leftarrow 0$, safe flag $\text{is\_safe} \leftarrow \text{True}$.
+            \FOR{$\tau = 0$ \textbf{to} $H-1$}
+                \STATE Predict forward states across hypotheses: $\hat{s}_{\tau+1, k} = f_{\theta_k}(\hat{s}_\tau, a_\tau^{(i)}), \; \forall k$.
+                \STATE Compute mean $\mu_{h, m}$ and variance $\sigma_{h, m}^2$ of $h_m(\hat{s}_{\tau+1, \cdot})$.
+                \STATE Compute Cantelli LCB: $\text{LCB}_{h, m} = \mu_{h, m} - \sqrt{\frac{1-\delta}{\delta}} \sigma_{h, m}$.
+                \IF{$\min_m [\text{LCB}_{h, m} - (1-\alpha) h_m(\hat{s}_\tau)] < 0$}
+                    \STATE $\text{is\_safe} \leftarrow \text{False}$, $J^{(i)} \leftarrow -\infty$, \textbf{break}
+                \ENDIF
+                \STATE Compute CHD: $r_{\text{CHD}}(\hat{s}_\tau, a_\tau^{(i)}) = \sum_k b_t(\theta_k) D_{\text{KL}}(p_k \,||\, \bar{p})$.
+                \STATE Accumulate reward: $J^{(i)} \leftarrow J^{(i)} + \gamma^\tau r_{\text{CHD}}(\hat{s}_\tau, a_\tau^{(i)})$.
+                \STATE Rollout mixture transition: $\hat{s}_{\tau+1} \leftarrow \sum_k b_t(\theta_k) \hat{s}_{\tau+1, k}$.
+            \ENDFOR
+        \ENDFOR
+        \STATE Select elite subset of top $\lceil \rho N \rceil$ trajectories with finite score.
+        \STATE Refit mean $\mu$ and covariance $\Sigma$ to elite trajectories.
+    \ENDFOR
+    \STATE Execute first action $a_t^* = \mu_0$ in environment.
+    \STATE Observe true transition $s_{t+1}$ and reward $r_t$.
+    \STATE Update Bayesian belief state via LogSumExp:
+    \STATE $b_{t+1}(\theta_k) \propto b_t(\theta_k) \cdot p(s_{t+1} \mid s_t, a_t^*, \theta_k)$.
+    \STATE Record transition: $\mathcal{D} \leftarrow \mathcal{D} \cup \{(s_t, a_t^*, s_{t+1})\}$, $t \leftarrow t + 1$.
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
