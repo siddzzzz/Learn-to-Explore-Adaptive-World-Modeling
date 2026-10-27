@@ -1,0 +1,33 @@
+% neurips_2026.sty - NeurIPS style package
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{neurips_2026}[2026/01/01 NeurIPS 2026 Submission Style]
+
+\RequirePackage{amsmath,amssymb,amsfonts,amsthm}
+\RequirePackage{algorithm,algorithmic}
+\RequirePackage{booktabs}
+\RequirePackage{graphicx}
+\RequirePackage{microtype}
+\RequirePackage{hyperref}
+\RequirePackage{url}
+\RequirePackage{natbib}
+
+% Page Geometry
+\usepackage[letterpaper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0.3em}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}{Remark}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=purple,
+    citecolor=blue,
+    urlcolor=teal
+}
+
+\endinput
