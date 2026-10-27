@@ -47,8 +47,14 @@ For the detailed implementation roadmap, see [`ROADMAP.md`](ROADMAP.md).
 │   └── dashboard/            # Interactive Streamlit scientific studio & Plotly visualizers
 ├── tests/                    # 35 unit, statistical, and mathematical correctness tests
 ├── benchmarks/               # Reproducible benchmark experiments and publication figures
+├── paper/                    # NeurIPS 2026 Camera-Ready LaTeX Manuscript Package
+│   ├── main.tex              # Master LaTeX manuscript
+│   ├── neurips_2026.sty      # Style package
+│   ├── references.bib        # Peer-reviewed academic bibliography
+│   └── sections/             # Modular manuscript sections (Theory, Method, Proofs)
 └── app.py                    # Multi-page interactive Streamlit research studio
 ```
+
 
 
 ---
