@@ -1,0 +1,40 @@
+\documentclass{article}
+
+% NeurIPS 2026 Style Package
+\usepackage{neurips_2026}
+
+\title{\textbf{HEx-WM: Hypothesis-Experimenting World Models for Safety-Constrained Bayesian Active Discovery}}
+
+\author{
+  \textbf{Siddharth S.}\\
+  Department of Computer Science \& Artificial Intelligence\\
+  \texttt{siddharth@research.org}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Reinforcement learning agents deployed in complex, unfamiliar scientific environments must actively explore to discover the underlying physical laws while avoiding catastrophic failure. Modern exploration heuristics based on intrinsic curiosity or continuous ensemble variance fail catastrophically in the presence of irreducible aleatoric stochasticity (the \emph{Noisy TV pathology}) and lack the capacity to reason about competing structural hypotheses. In this paper, we propose \textbf{HEx-WM} (\textbf{H}ypothesis-\textbf{Ex}perimenting \textbf{W}orld \textbf{M}odels) and its safety-guaranteed extension \textbf{Safe-HEx-WM}. Formulated as Sequential Bayesian Experimental Design (sBED) over an Epistemic POMDP, HEx-WM introduces \emph{Contrastive Hypothesis Discrepancy} (CHD) as an active acquisition metric that maximizes information gain while provably eliminating aleatoric noise distractors (\textbf{Theorem 1}). To ensure safe deployment in physical systems such as self-driving chemical reactors, Safe-HEx-WM incorporates Control Barrier Functions (CBFs) with distribution-free Cantelli Lower Confidence Bounds (LCB), guaranteeing forward invariance of safe operating envelopes with probability at least $1 - \delta$ under arbitrary epistemic model ambiguity (\textbf{Theorem 2}). In benchmarks spanning causal discovery, extreme Noisy TV distractors, and an Arrhenius chemical synthesis reactor, Safe-HEx-WM achieves order-of-magnitude faster entropy reduction than ICM, Plan2Explore, and Bayesian Optimization while maintaining \textbf{zero safety violations}.
+\end{abstract}
+
+% Core Sections
+\input{sections/01_introduction.tex}
+\input{sections/02_theory.tex}
+\input{sections/03_method.tex}
+\input{sections/04_experiments.tex}
+\input{sections/05_algorithms.tex}
+
+\section*{Broader Impact}
+This work bridges the gap between active Bayesian experimental design and autonomous world model reinforcement learning. The theoretical safety guarantees (Theorem 2) provide a robust foundation for deploying autonomous experimentation in physical self-driving laboratories, battery materials discovery, and chemical reactor optimization without catastrophic risk.
+
+% Bibliography
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\newpage
+% Appendix & Proofs
+\input{sections/06_appendix.tex}
+
+\end{document}
