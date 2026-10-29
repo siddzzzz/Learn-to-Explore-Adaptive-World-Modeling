@@ -104,9 +104,12 @@ class HExWMAgent:
                 # Compute Contrastive Hypothesis Discrepancy (Jensen-Shannon divergence)
                 r_chd = compute_chd(preds_arr, weights, noise_variance=self.noise_variance)
 
+                # Small intervention effort regularization so uninformative distractor actions (r_chd = 0) are not arbitrarily sampled
+                reward = r_chd - 1e-4 * float(a)
+
                 # Imagined next state is expectation under current belief
                 expected_next_s = np.sum(weights[:, np.newaxis] * preds_arr, axis=0)
-                return expected_next_s, r_chd
+                return expected_next_s, reward
 
             action, _, _ = self.planner.plan_discrete(current_state, epistemic_rollout)
 

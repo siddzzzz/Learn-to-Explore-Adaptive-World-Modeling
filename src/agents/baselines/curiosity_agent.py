@@ -31,16 +31,17 @@ class CuriosityAgent:
 
         self.belief_tracker = BayesianBeliefTracker(num_hypotheses=self.K)
         # Running prediction model of transitions (mean over past seen transitions)
-        self.seen_errors: Dict[int, float] = {a: 1.0 for a in range(num_actions)}
+        # Initialize with small prior error
+        self.seen_errors: Dict[int, float] = {a: float(self.rng.uniform(0.01, 0.05)) for a in range(num_actions)}
 
     def reset(self) -> None:
         self.belief_tracker.reset()
-        self.seen_errors = {a: 1.0 for a in range(self.num_actions)}
+        self.seen_errors = {a: float(self.rng.uniform(0.01, 0.05)) for a in range(self.num_actions)}
 
     def select_action(self, current_state: np.ndarray) -> int:
         # Greedily pick action with highest recent prediction error
-        # (with small epsilon noise for exploration)
-        if self.rng.rand() < 0.1:
+        # In presence of distractor actions, prediction error on the TV dominates
+        if self.rng.rand() < 0.15:
             return int(self.rng.choice(self.num_actions))
 
         best_a = max(self.seen_errors, key=self.seen_errors.get)
@@ -56,14 +57,16 @@ class CuriosityAgent:
         map_idx, _ = self.belief_tracker.get_map_hypothesis()
         pred_mu = self.hypothesis_evaluators[map_idx].evaluate(interventions=interv)
         
-        # Prediction error includes observation noise (Noisy TV)
-        error = float(np.sum((next_state[:len(pred_mu)] - pred_mu) ** 2))
-        if len(next_state) > len(pred_mu):
-            # Noisy TV channel error adds unmodelable aleatoric error
-            noise_error = float(np.sum(next_state[len(pred_mu):] ** 2))
-            error += noise_error
+        causal_dim = len(pred_mu)
+        # Physical prediction error
+        phys_error = float(np.sum((next_state[:causal_dim] - pred_mu) ** 2))
+        error = phys_error
+        if len(next_state) > causal_dim:
+            # TV channel distractor has huge unpredictable aleatoric error
+            tv_noise = next_state[causal_dim:]
+            error += float(np.sum(tv_noise ** 2))
 
-        self.seen_errors[action] = 0.8 * self.seen_errors[action] + 0.2 * error
+        self.seen_errors[action] = 0.7 * self.seen_errors[action] + 0.3 * error
 
         # Bayesian belief update
         log_liks = np.zeros(self.K, dtype=np.float64)
