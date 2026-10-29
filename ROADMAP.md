@@ -126,16 +126,23 @@
 
 ---
 
-### [x] Phase 9: Complete Conference Paper LaTeX Submission Package (`paper/`)
-- [x] **Commit 1**: NeurIPS 2026 LaTeX style configuration (`paper/neurips_2026.sty`)
-- [x] **Commit 2**: Rigorous academic bibliography (`paper/references.bib`)
-- [x] **Commit 3**: Introduction section framing active BED and Noisy TV immunity (`paper/sections/01_introduction.tex`)
-- [x] **Commit 4**: Epistemic POMDP problem formulation and Theorem 1 (`paper/sections/02_theory.tex`)
-- [x] **Commit 5**: Methodology section with Safe-CEM, CBFs, and Theorem 2 (`paper/sections/03_method.tex`)
-- [x] **Commit 6**: Empirical benchmark results table and chemical reactor findings (`paper/sections/04_experiments.tex`)
-- [x] **Commit 7**: Formal Algorithm 1 pseudocode for Safe-HEx-WM (`paper/sections/05_algorithms.tex`)
-- [x] **Commit 8**: Supplementary Material with full proofs for Theorems 1 and 2 (`paper/sections/06_appendix.tex`)
-- [x] **Commit 9**: Master LaTeX document integration (`paper/main.tex`)
-- [x] **Commit 10**: Research repository integration and camera-ready status (`README.md`, `ROADMAP.md`)
+### [x] Phase 10: Deep Empirical Expansion & Interactive Active Noisy-TV Benchmark
+- [x] **Commit 1**: Formal active distractor protocol and mathematical fixation metrics (`docs/ACTIVE_NOISY_TV_PROTOCOL.md`)
+- [x] **Commit 2**: Interactive environment `ActiveNoisyTVLabEnv` with controllable distractor channels (`src/envs/causal_lab/active_noisy_tv_env.py`)
+- [x] **Commit 3**: Baseline agents updated with full sensory observation routing (`src/agents/baselines/curiosity_agent.py`, `plan2explore_agent.py`)
+- [x] **Commit 4**: Pytest validation suite for active noisy-TV environment and agents (`tests/test_active_noisy_tv.py`)
+- [x] **Commit 5**: Benchmark runner `benchmarks/run_active_noisy_tv_benchmark.py` evaluating multi-seed distractor fixation
+- [x] **Commit 6**: Distractor Fixation Rate ($\Phi_{\text{TV}}$) and entropy trajectory data logging (`benchmarks/results/active_noisy_tv_results.json`)
+- [x] **Commit 7**: Dual-panel publication figure generation (`benchmarks/figures/fig5_active_noisy_tv_benchmark.png`)
+- [x] **Commit 8**: Empirical findings documentation in `docs/EXPERIMENT_RESULTS.md` and roadmap update
+
+---
+
+### Upcoming Empirical Benchmarks (Before Paper Drafting)
+- [ ] **Phase B**: Rigorous Multi-Seed Safety-Constrained BED Benchmark (Quantitative Safety Violations vs. Discovery Speed across diverse risk tolerances $\delta$)
+- [ ] **Phase C**: Continuous Stirred Tank Reactor (CSTR) Dynamic Control Lab (Continuous ODE control with thermal runaway curves)
+- [ ] **Phase D**: Neural Causal Graph Discovery Benchmark (Structural Hamming Distance, TPR, and FDR on 10/20-node DAGs)
+- [ ] **Phase E**: Systemic Scientific Ablation Matrix (EIG vs BALD vs CHD, Planning Horizons $H \in \{1, 3, 5\}$, Cantelli vs Gaussian bounds)
+
 
 
