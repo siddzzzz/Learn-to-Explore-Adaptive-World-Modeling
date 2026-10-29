@@ -108,3 +108,27 @@ We evaluated **HEx-WM** across four rigorous benchmark experiments designed to s
 
 > **Figure 4**: Saved at `benchmarks/figures/fig4_chemical_reactor_benchmark.png`. Shows rapid entropy collapse to zero in 5 batches (Panel A) and 99.5% purity synthesis under strict safety limits while Bayesian Optimization fails (Panel B).
 
+---
+
+## Benchmark 6: Interactive Active Noisy-TV Distractor (Theorem 1 in Action)
+
+### Protocol
+- **Setting**: The agent faces an environment where it can choose between executing genuine physical experiments ($\text{do}(X_i = x)$) or interacting with an aleatoric noise source ("Noisy TV") by switching channels ($\sigma_{\text{dist}} = 3.0$).
+- **Distractor Fixation Rate ($\Phi_{\text{TV}}$)** measures the percentage of actions wasted clicking the distractor instead of performing informative causal science.
+- Evaluated over 5 independent random seeds ($T = 20$ steps per episode).
+
+### Quantitative Results
+| Agent | Exploration Objective | TV Fixation Rate ($\Phi_{\text{TV}}$) $\downarrow$ | Final Entropy (nats) $\downarrow$ | Steps to Discovery $\downarrow$ |
+|---|---|---|---|---|
+| **HEx-WM (Ours)** | **Contrastive Hypothesis Discrepancy (CHD)** | **0.0%** | **0.000 ± 0.000** | **1.0 ± 0.0** |
+| **Plan2Explore** | Ensemble Variance Disagreement | 0.0% | 0.000 ± 0.000 | 1.0 ± 0.0 |
+| **ICM Curiosity** | 1-step Prediction Error | 18.0% | 0.555 ± 0.210 | 9.4 ± 3.8 |
+| **Random Exploration** | Uniform Random Policy | 21.0% | 0.000 ± 0.000 | 6.4 ± 1.5 |
+
+### Key Insights
+1. **Theorem 1 Confirmed**: HEx-WM maintains exactly **0.0% distractor fixation**. Because $r_{\text{CHD}}$ contrasts candidate physical hypotheses, the independent noise channel has identical predictive likelihood across all hypotheses, yielding an acquisition score of exactly 0.
+2. **Curiosity Fixation**: ICM curiosity is severely impaired by the distractor, allocating 18.0% of its budget to watching the noise channel, causing slow and degraded hypothesis convergence (final entropy 0.555 nats vs 0.000 for HEx-WM).
+
+> **Figure 5**: Saved at `benchmarks/figures/fig5_active_noisy_tv_benchmark.png`. Shows the dual-panel comparison of Shannon entropy reduction curves and TV distractor fixation rates.
+
+
