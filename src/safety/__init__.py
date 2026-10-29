@@ -7,16 +7,15 @@ complete SafeHExWMAgent.
 
 from src.safety.barrier_function import (
     ControlBarrierFunction,
-    StateBoundBarrier,
-    LinearBarrier,
+    create_box_barrier,
+    create_thermal_barrier,
+    create_toxicity_barrier,
 )
 from src.safety.epistemic_safety_filter import (
     EpistemicSafetyFilter,
-    EpistemicCBFResult,
 )
 from src.safety.safe_trajectory_cem import (
     SafeTrajectoryCEMPlanner,
-    SafeCEMResult,
 )
 from src.safety.safe_hex_agent import (
     SafeHExWMAgent,
@@ -24,11 +23,10 @@ from src.safety.safe_hex_agent import (
 
 __all__ = [
     "ControlBarrierFunction",
-    "StateBoundBarrier",
-    "LinearBarrier",
+    "create_box_barrier",
+    "create_thermal_barrier",
+    "create_toxicity_barrier",
     "EpistemicSafetyFilter",
-    "EpistemicCBFResult",
     "SafeTrajectoryCEMPlanner",
-    "SafeCEMResult",
     "SafeHExWMAgent",
 ]
