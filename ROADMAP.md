@@ -138,11 +138,25 @@
 
 ---
 
+### [x] Phase 11: Multi-Seed Safety-Constrained BED (Safe-BED) Benchmark
+- [x] **Commit 1**: Formal Safe-BED experimental protocol and Cantelli risk tolerance specifications (`docs/SAFE_BED_PROTOCOL.md`)
+- [x] **Commit 2**: Physical reactor safety evaluation harness (`src/envs/chemical_reactor/safety_evaluator.py`)
+- [x] **Commit 3**: Package exports for `ReactorSafetyEvaluator` (`src/envs/chemical_reactor/__init__.py`)
+- [x] **Commit 4**: Constrained Gaussian Process Bayesian Optimization baseline (`src/agents/baselines/constrained_bo_agent.py`)
+- [x] **Commit 5**: Baseline package exports for Constrained GP-BO (`src/agents/baselines/__init__.py`)
+- [x] **Commit 6**: SafetyMetricsLogger for tracking cumulative breaches and margins (`src/safety/safety_logger.py`)
+- [x] **Commit 7**: Pytest suite for safety evaluator, constrained GP-BO, and logger (`tests/test_safe_bed.py`)
+- [x] **Commit 8**: Multi-seed benchmark runner and raw results logging (`benchmarks/run_safe_bed_benchmark.py`, `benchmarks/results/safe_bed_results.json`)
+- [x] **Commit 9**: Publication Figure 6 generation (`benchmarks/figures/fig6_safe_bed_benchmark.png`)
+- [x] **Commit 10**: Documentation update in `docs/EXPERIMENT_RESULTS.md` and roadmap sync
+
+---
+
 ### Upcoming Empirical Benchmarks (Before Paper Drafting)
-- [ ] **Phase B**: Rigorous Multi-Seed Safety-Constrained BED Benchmark (Quantitative Safety Violations vs. Discovery Speed across diverse risk tolerances $\delta$)
 - [ ] **Phase C**: Continuous Stirred Tank Reactor (CSTR) Dynamic Control Lab (Continuous ODE control with thermal runaway curves)
 - [ ] **Phase D**: Neural Causal Graph Discovery Benchmark (Structural Hamming Distance, TPR, and FDR on 10/20-node DAGs)
 - [ ] **Phase E**: Systemic Scientific Ablation Matrix (EIG vs BALD vs CHD, Planning Horizons $H \in \{1, 3, 5\}$, Cantelli vs Gaussian bounds)
+
 
 
 
