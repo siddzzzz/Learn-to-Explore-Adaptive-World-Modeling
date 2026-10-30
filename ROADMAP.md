@@ -152,10 +152,24 @@
 
 ---
 
+### [x] Phase 12: Continuous Stirred Tank Reactor (CSTR) Dynamic Trajectory Control Lab
+- [x] **Commit 1**: Physical theory & continuous dynamic CSTR ODE derivations (`docs/CSTR_DYNAMIC_THEORY.md`)
+- [x] **Commit 2**: Arrhenius kinetic mechanisms & Runge-Kutta 4th-order integrator (`src/envs/chemical_reactor/cstr_kinetics.py`)
+- [x] **Commit 3**: Continuous trajectory Control Barrier Functions (`src/safety/cstr_barrier.py`)
+- [x] **Commit 4**: Gymnasium environment `ContinuousCSTREnv` for closed-loop cooling regulation (`src/envs/chemical_reactor/cstr_env.py`)
+- [x] **Commit 5**: Package exports integration for CSTR dynamics and environment (`src/envs/chemical_reactor/__init__.py`)
+- [x] **Commit 6**: Pytest suite for CSTR RK4 integration, Gym API, and thermal CBFs (`tests/test_cstr_env.py`)
+- [x] **Commit 7**: Closed-loop continuous trajectory Safe-CEM planner (`src/planning/cstr_trajectory_planner.py`)
+- [x] **Commit 8**: Multi-seed CSTR closed-loop benchmark runner and quantitative data logging (`benchmarks/run_cstr_benchmark.py`, `benchmarks/results/cstr_dynamic_results.json`)
+- [x] **Commit 9**: Publication Figure 7 generation (`benchmarks/figures/fig7_cstr_dynamic_benchmark.png`)
+- [x] **Commit 10**: Documentation update in `docs/EXPERIMENT_RESULTS.md` and roadmap sync
+
+---
+
 ### Upcoming Empirical Benchmarks (Before Paper Drafting)
-- [ ] **Phase C**: Continuous Stirred Tank Reactor (CSTR) Dynamic Control Lab (Continuous ODE control with thermal runaway curves)
 - [ ] **Phase D**: Neural Causal Graph Discovery Benchmark (Structural Hamming Distance, TPR, and FDR on 10/20-node DAGs)
 - [ ] **Phase E**: Systemic Scientific Ablation Matrix (EIG vs BALD vs CHD, Planning Horizons $H \in \{1, 3, 5\}$, Cantelli vs Gaussian bounds)
+
 
 
 
