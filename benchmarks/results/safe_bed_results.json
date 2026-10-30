@@ -1,0 +1,372 @@
+{
+  "Safe-HEx-WM (Ours)": {
+    "mean_violations": 0.0,
+    "min_margin": 0.06397802233695982,
+    "max_temp": 373.7159729003906,
+    "approval_pct": 100.0,
+    "downstream_purity": 73.3559063525469,
+    "trials": [
+      {
+        "total_steps": 8,
+        "cumulative_violations": 0,
+        "thermal_violations": 0,
+        "toxic_violations": 0,
+        "worst_safety_margin": 0.25350667387247083,
+        "mean_safety_margin": 0.3072261699941009,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.00014930377133218827,
+        "max_temperature": 356.0386657714844,
+        "max_toxic_waste": 0.09649332612752914,
+        "downstream_purity_pct": 75.49204578358297
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 0,
+        "thermal_violations": 0,
+        "toxic_violations": 0,
+        "worst_safety_margin": 0.06397802233695982,
+        "mean_safety_margin": 0.17233125437051056,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.0361632918473207e-13,
+        "max_temperature": 371.718994140625,
+        "max_toxic_waste": 0.28602197766304016,
+        "downstream_purity_pct": 75.11858811781336
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 0,
+        "thermal_violations": 0,
+        "toxic_violations": 0,
+        "worst_safety_margin": 0.23861769437789915,
+        "mean_safety_margin": 0.3175010596984066,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.0361632918473207e-13,
+        "max_temperature": 359.04669189453125,
+        "max_toxic_waste": 0.11138230562210083,
+        "downstream_purity_pct": 65.55826395994183
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 0,
+        "thermal_violations": 0,
+        "toxic_violations": 0,
+        "worst_safety_margin": 0.28411577492952345,
+        "mean_safety_margin": 0.31375239954795686,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.006767132574096259,
+        "max_temperature": 372.71533203125,
+        "max_toxic_waste": 0.06588422507047653,
+        "downstream_purity_pct": 75.49204578358297
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 0,
+        "thermal_violations": 0,
+        "toxic_violations": 0,
+        "worst_safety_margin": 0.07414374351501463,
+        "mean_safety_margin": 0.14613276966847477,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.0361632918473207e-13,
+        "max_temperature": 373.7159729003906,
+        "max_toxic_waste": 0.27585625648498535,
+        "downstream_purity_pct": 75.11858811781336
+      }
+    ]
+  },
+  "Unconstrained HEx-WM": {
+    "mean_violations": 3.4,
+    "min_margin": -58.234405517578125,
+    "max_temp": 478.2344055175781,
+    "approval_pct": 100.0,
+    "downstream_purity": 73.3559063525469,
+    "trials": [
+      {
+        "total_steps": 8,
+        "cumulative_violations": 3,
+        "thermal_violations": 3,
+        "toxic_violations": 0,
+        "worst_safety_margin": -54.351318359375,
+        "mean_safety_margin": -12.5835836767219,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.0361632918473207e-13,
+        "max_temperature": 474.351318359375,
+        "max_toxic_waste": 0.2283640205860138,
+        "downstream_purity_pct": 75.49204578358297
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 7,
+        "thermal_violations": 3,
+        "toxic_violations": 7,
+        "worst_safety_margin": -52.243621826171875,
+        "mean_safety_margin": -15.067530839703977,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.0361632918473207e-13,
+        "max_temperature": 472.2436218261719,
+        "max_toxic_waste": 3.5997116565704346,
+        "downstream_purity_pct": 75.11858811781336
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 2,
+        "thermal_violations": 2,
+        "toxic_violations": 0,
+        "worst_safety_margin": -49.71160888671875,
+        "mean_safety_margin": -9.486536247550974,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.0361632918473207e-13,
+        "max_temperature": 469.71160888671875,
+        "max_toxic_waste": 0.33211031556129456,
+        "downstream_purity_pct": 65.55826395994183
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 1,
+        "thermal_violations": 1,
+        "toxic_violations": 0,
+        "worst_safety_margin": -12.7587890625,
+        "mean_safety_margin": -1.3456255559809507,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 2.2044685950353522e-12,
+        "max_temperature": 432.7587890625,
+        "max_toxic_waste": 0.1305978149175644,
+        "downstream_purity_pct": 75.49204578358297
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 4,
+        "thermal_violations": 1,
+        "toxic_violations": 4,
+        "worst_safety_margin": -58.234405517578125,
+        "mean_safety_margin": -7.417752726725302,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.0361632918473207e-13,
+        "max_temperature": 478.2344055175781,
+        "max_toxic_waste": 3.8164796829223633,
+        "downstream_purity_pct": 75.11858811781336
+      }
+    ]
+  },
+  "Constrained GP-BO": {
+    "mean_violations": 1.2,
+    "min_margin": -55.671875,
+    "max_temp": 475.671875,
+    "approval_pct": 100.0,
+    "downstream_purity": 85.04631663286186,
+    "trials": [
+      {
+        "total_steps": 8,
+        "cumulative_violations": 1,
+        "thermal_violations": 1,
+        "toxic_violations": 0,
+        "worst_safety_margin": -44.256988525390625,
+        "mean_safety_margin": -5.232517459103837,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 464.2569885253906,
+        "max_toxic_waste": 0.016024701297283173,
+        "downstream_purity_pct": 84.06652400859328
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 1,
+        "thermal_violations": 1,
+        "toxic_violations": 1,
+        "worst_safety_margin": -55.671875,
+        "mean_safety_margin": -6.744897964317351,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 475.671875,
+        "max_toxic_waste": 1.9459874629974365,
+        "downstream_purity_pct": 82.135304208295
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 1,
+        "thermal_violations": 1,
+        "toxic_violations": 0,
+        "worst_safety_margin": -25.438720703125,
+        "mean_safety_margin": -2.8880102574708872,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 445.438720703125,
+        "max_toxic_waste": 0.20815175771713257,
+        "downstream_purity_pct": 87.1616675402455
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 1,
+        "thermal_violations": 1,
+        "toxic_violations": 0,
+        "worst_safety_margin": -48.69189453125,
+        "mean_safety_margin": -5.789338495954871,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 468.69189453125,
+        "max_toxic_waste": 0.03813197836279869,
+        "downstream_purity_pct": 86.90949904015454
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 2,
+        "thermal_violations": 0,
+        "toxic_violations": 2,
+        "worst_safety_margin": -0.5325191855430603,
+        "mean_safety_margin": 0.02650536727160213,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 395.89093017578125,
+        "max_toxic_waste": 0.8825191855430603,
+        "downstream_purity_pct": 84.95858836702098
+      }
+    ]
+  },
+  "Standard GP-BO": {
+    "mean_violations": 4.0,
+    "min_margin": -59.87615966796875,
+    "max_temp": 479.87615966796875,
+    "approval_pct": 100.0,
+    "downstream_purity": 82.00195044561359,
+    "trials": [
+      {
+        "total_steps": 8,
+        "cumulative_violations": 4,
+        "thermal_violations": 4,
+        "toxic_violations": 0,
+        "worst_safety_margin": -59.87615966796875,
+        "mean_safety_margin": -17.29721465257462,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 479.87615966796875,
+        "max_toxic_waste": 0.2375011295080185,
+        "downstream_purity_pct": 94.68502272321527
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 3,
+        "thermal_violations": 3,
+        "toxic_violations": 3,
+        "worst_safety_margin": -59.321044921875,
+        "mean_safety_margin": -11.072410173900424,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 479.321044921875,
+        "max_toxic_waste": 1.991572618484497,
+        "downstream_purity_pct": 69.66106600893424
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 6,
+        "thermal_violations": 6,
+        "toxic_violations": 0,
+        "worst_safety_margin": -50.349212646484375,
+        "mean_safety_margin": -25.061196513846518,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 470.3492126464844,
+        "max_toxic_waste": 0.17571812868118286,
+        "downstream_purity_pct": 85.53132664029589
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 3,
+        "thermal_violations": 3,
+        "toxic_violations": 0,
+        "worst_safety_margin": -51.79302978515625,
+        "mean_safety_margin": -15.583630385517608,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 471.79302978515625,
+        "max_toxic_waste": 0.04387858510017395,
+        "downstream_purity_pct": 96.20989402438322
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 4,
+        "thermal_violations": 1,
+        "toxic_violations": 4,
+        "worst_safety_margin": -26.4058837890625,
+        "mean_safety_margin": -3.353744407556951,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 0.5,
+        "max_temperature": 446.4058837890625,
+        "max_toxic_waste": 1.5585392713546753,
+        "downstream_purity_pct": 63.9224428312393
+      }
+    ]
+  },
+  "Random": {
+    "mean_violations": 5.0,
+    "min_margin": -58.32989501953125,
+    "max_temp": 478.32989501953125,
+    "approval_pct": 100.0,
+    "downstream_purity": 53.74837721582888,
+    "trials": [
+      {
+        "total_steps": 8,
+        "cumulative_violations": 3,
+        "thermal_violations": 3,
+        "toxic_violations": 0,
+        "worst_safety_margin": -52.250885009765625,
+        "mean_safety_margin": -14.76462043527863,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.386,
+        "max_temperature": 472.2508850097656,
+        "max_toxic_waste": 0.33159953355789185,
+        "downstream_purity_pct": 87.32427919163086
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 7,
+        "thermal_violations": 5,
+        "toxic_violations": 7,
+        "worst_safety_margin": -49.58990478515625,
+        "mean_safety_margin": -23.52783532217145,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.386,
+        "max_temperature": 469.58990478515625,
+        "max_toxic_waste": 2.1471943855285645,
+        "downstream_purity_pct": 4.647617856041993
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 3,
+        "thermal_violations": 3,
+        "toxic_violations": 0,
+        "worst_safety_margin": -49.406402587890625,
+        "mean_safety_margin": -11.619583259802312,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.386,
+        "max_temperature": 469.4064025878906,
+        "max_toxic_waste": 0.064755380153656,
+        "downstream_purity_pct": 84.79809198379871
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 4,
+        "thermal_violations": 4,
+        "toxic_violations": 0,
+        "worst_safety_margin": -58.32989501953125,
+        "mean_safety_margin": -27.107073836773633,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.386,
+        "max_temperature": 478.32989501953125,
+        "max_toxic_waste": 0.03304574266076088,
+        "downstream_purity_pct": 87.32427919163086
+      },
+      {
+        "total_steps": 8,
+        "cumulative_violations": 8,
+        "thermal_violations": 6,
+        "toxic_violations": 8,
+        "worst_safety_margin": -58.234405517578125,
+        "mean_safety_margin": -28.650885494798423,
+        "filter_approval_rate_pct": 100.0,
+        "final_entropy": 1.386,
+        "max_temperature": 478.2344055175781,
+        "max_toxic_waste": 3.8244476318359375,
+        "downstream_purity_pct": 4.647617856041993
+      }
+    ]
+  }
+}

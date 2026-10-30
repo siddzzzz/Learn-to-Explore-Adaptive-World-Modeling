@@ -76,3 +76,7 @@ class BayesianOptimizationAgent:
         if len(X) >= 2:
             self.gp.fit(X, y)
             self.is_fitted = True
+
+    def observe_result(self, action: np.ndarray, reward: float, safety_margin: float = 0.0) -> None:
+        """Alias for observe_experiment to maintain unified baseline API."""
+        self.observe_experiment(action, reward)

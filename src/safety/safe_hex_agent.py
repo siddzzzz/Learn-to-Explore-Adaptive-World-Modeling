@@ -66,13 +66,15 @@ class SafeHExWMAgent:
         self.history_safety_margins = []
 
     def _rollout_hypotheses(self, state: np.ndarray, action: np.ndarray) -> np.ndarray:
-        """Evaluates predicted next state across all K candidate models."""
+        """Evaluates predicted next state [T, C_A, C_P, C_W] across all K candidate models."""
         params = self.denormalize_action_fn(action)
         # Expected signature: simulate(T, Ca, Cb, dur)
         preds = []
         for model in self.hypothesis_models:
-            out = model.simulate(*params)
-            preds.append(out)
+            concs = model.simulate(*params)
+            # Assemble operational state [T, C_A, C_P, C_W]
+            full_state = np.array([params[0], concs[0], concs[2], concs[3]], dtype=np.float64)
+            preds.append(full_state)
         return np.array(preds)
 
     def select_action(self, current_state: np.ndarray) -> Tuple[np.ndarray, bool, float]:
