@@ -65,12 +65,15 @@ class CSTRDynamicTrajectoryPlanner:
 
         best_trajectory = mean_u.copy()
         best_score = -np.inf
-        best_margin = 0.0
+        best_margin = -np.inf
         is_safe_plan = False
 
         for iteration in range(self.num_iterations):
             # Sample trajectory candidates
             samples = self.rng.normal(mean_u, std_u, size=(self.num_candidates, self.horizon))
+            # Always include extreme cooling trajectory (u = 1.0 -> qc = 100 L/min) in candidate pool
+            samples[0] = 1.0
+            samples[1] = 0.8
             samples = np.clip(samples, -1.0, 1.0)
 
             scores = []
@@ -119,7 +122,7 @@ class CSTRDynamicTrajectoryPlanner:
 
                 # Heavily penalize unsafe trajectories
                 if use_safety_barrier and not traj_is_safe:
-                    score -= 1000.0 + 10.0 * max(0.0, -traj_margin)
+                    score -= 1e5 + 1000.0 * max(0.0, -traj_margin)
 
                 scores.append(score)
                 margins.append(traj_margin)
@@ -132,11 +135,11 @@ class CSTRDynamicTrajectoryPlanner:
             mean_u = np.mean(samples[elite_indices], axis=0)
             std_u = np.std(samples[elite_indices], axis=0) + 1e-4
 
-            if scores[elite_indices[-1]] > best_score:
-                best_score = scores[elite_indices[-1]]
-                best_trajectory = samples[elite_indices[-1]]
-                best_margin = margins[elite_indices[-1]]
-                is_safe_plan = safe_flags[elite_indices[-1]]
+            best_sample_idx = int(np.argmax(scores))
+            best_score = scores[best_sample_idx]
+            best_trajectory = samples[best_sample_idx]
+            best_margin = margins[best_sample_idx]
+            is_safe_plan = safe_flags[best_sample_idx]
 
         first_action = np.array([best_trajectory[0]], dtype=np.float32)
         return first_action, is_safe_plan, best_margin

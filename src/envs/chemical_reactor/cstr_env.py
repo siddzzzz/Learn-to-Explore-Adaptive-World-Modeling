@@ -57,8 +57,8 @@ class ContinuousCSTREnv(gym.Env):
             dtype=np.float32
         )
 
-        # Initial steady state near operating point
-        self.initial_state = np.array([0.8, 330.0, 310.0], dtype=np.float64)
+        # Initial state operating at standard operational temperature
+        self.initial_state = np.array([0.75, 345.0, 305.0], dtype=np.float64)
         self.state = self.initial_state.copy()
         self.current_step = 0
         self.rng = np.random.RandomState(42)
