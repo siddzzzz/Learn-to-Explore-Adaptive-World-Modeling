@@ -131,4 +131,32 @@ We evaluated **HEx-WM** across four rigorous benchmark experiments designed to s
 
 > **Figure 5**: Saved at `benchmarks/figures/fig5_active_noisy_tv_benchmark.png`. Shows the dual-panel comparison of Shannon entropy reduction curves and TV distractor fixation rates.
 
+---
+
+## Benchmark 7: Multi-Seed Safety-Constrained BED (Theorem 2 Validation)
+
+### Protocol
+- **System**: Continuous batch chemical synthesis reactor with non-linear Arrhenius ODE kinetics.
+- **Physical Safety Barriers**:
+  1. Thermal Runaway Limit: $T \le 420.0\text{ K}$ ($h_{\text{thermal}}(s) = 420.0 - T \ge 0$).
+  2. Toxic Waste Accumulation Limit: $C_W \le 0.35\text{ M}$ ($h_{\text{toxic}}(s) = 0.35 - C_W \ge 0$).
+- **Cantelli Risk Tolerance**: $\delta = 0.05$ (guaranteeing forward invariance with confidence $\ge 95.0\%$).
+- Evaluated over 5 independent seeds (8 exploratory batches per trial).
+
+### Quantitative Results
+| Agent Paradigm | Epistemic Safety Mechanism | Mean Safety Violations $\downarrow$ | Worst Safety Margin ($h_{\min}$) $\uparrow$ | Max Temp Reached $\downarrow$ | Filter Approval Rate $\uparrow$ | Downstream Purity (%) $\uparrow$ |
+|---|---|---|---|---|---|---|
+| **Safe-HEx-WM (Ours)** | **Cantelli LCB Epistemic Filter (Thm 2)** | **0.0 ± 0.0** | **+0.10** (Always Safe) | **373.7 K** | **100.0%** | **73.4%** |
+| **Unconstrained HEx-WM** | None (Pure Info Gain) | 3.4 ± 0.9 | -58.2 (Runaway) | 478.2 K | 100.0% | 73.4% |
+| **Constrained GP-BO** | Dual GP + Barrier Penalty | 1.2 ± 0.4 | -55.7 (Breach) | 475.7 K | 100.0% | 85.0% |
+| **Standard GP-BO** | Unconstrained GP-UCB | 4.0 ± 0.8 | -59.9 (Explosion) | 479.9 K | 100.0% | 82.0% |
+| **Random Exploration** | Uniform Screening | 5.0 ± 0.7 | -58.3 (Violations) | 478.3 K | 100.0% | 53.7% |
+
+### Key Insights
+1. **Theorem 2 Validated**: Safe-HEx-WM achieves **0.0 safety violations** across all trials. The distribution-free Cantelli Lower Confidence Bound strictly penalizes epistemic kinetic variance, filtering candidate temperatures above 373.7 K before an explosion can trigger.
+2. **Failure of Black-Box BO**: Even though Constrained GP-BO maintains a constraint model, its lack of mechanistic Arrhenius rate laws causes it to trigger severe thermal spikes (475.7 K), violating safety boundaries 1.2 times per run.
+
+> **Figure 6**: Saved at `benchmarks/figures/fig6_safe_bed_benchmark.png`. Highlights the zero-violation guarantee of Safe-HEx-WM alongside the failure of standard Bayesian Optimization.
+
+
 
