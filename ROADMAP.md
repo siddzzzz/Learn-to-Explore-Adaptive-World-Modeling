@@ -180,8 +180,28 @@
 
 ---
 
-### Upcoming Empirical Benchmarks (Before Paper Drafting)
-- [ ] **Phase E**: Systemic Scientific Ablation Matrix (EIG vs BALD vs CHD, Planning Horizons $H \in \{1, 3, 5\}$, Cantelli vs Gaussian bounds)
+### [x] Phase 14: Systemic Scientific Ablation Study Matrix (Phase E)
+- [x] **Commit 1**: Formal ablation protocol across objectives, horizons, and safety bounds (`docs/ABLATION_STUDY_PROTOCOL.md`)
+- [x] **Commit 2**: Implementation of modular ablation experiment harness (`src/planning/ablation_runner.py`)
+- [x] **Commit 3**: Comprehensive pytest suite for ablation runners and SCM evaluation (`tests/test_ablation_matrix.py`)
+- [x] **Commit 4**: Systemic multi-axis ablation benchmark suite runner (`benchmarks/run_ablation_study.py`)
+- [x] **Commit 5**: Raw quantitative ablation results logging across 5 seeds (`benchmarks/results/ablation_matrix_results.json`)
+- [x] **Commit 6**: Three-panel publication Figure 9 generation (`benchmarks/figures/fig9_ablation_matrix.png`)
+- [x] **Commit 7**: Benchmark 10 documentation in `docs/EXPERIMENT_RESULTS.md` and roadmap synchronization
+
+---
+
+### Empirical Validation Suite Status
+- [x] Benchmark 1: Hypothesis Elimination Sample Complexity (Figure 1)
+- [x] Benchmark 2: Aleatoric Distractor Invariance (Figure 2)
+- [x] Benchmark 3: Non-Stationary Rule Mutation Adaptation (Figure 3)
+- [x] Benchmark 4: Zero-Shot Downstream Task Transfer (Figure 4)
+- [x] Benchmark 5: Active Noisy-TV Distractor Interaction (Figure 5)
+- [x] Benchmark 6: Multi-Seed Safe-BED Barrier Bounds (Figure 6)
+- [x] Benchmark 7: Continuous CSTR Dynamic Trajectory Control (Figure 7)
+- [x] Benchmark 8: End-to-End Neural Causal Graph Discovery (Figure 8)
+- [x] Benchmark 9: Systemic Scientific Component Ablation Matrix (Figure 9)
+
 
 
 
