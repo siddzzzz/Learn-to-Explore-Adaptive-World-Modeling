@@ -45,9 +45,59 @@ class NeuralCausalAgent:
             device=device
         )
 
+        # Optimizer for gradient-based causal induction
+        self.optimizer = torch.optim.Adam(self.world_model.parameters(), lr=1e-3)
+        self.replay_buffer: List[Tuple[np.ndarray, np.ndarray, np.ndarray, Dict[int, float]]] = []
+
         # Candidate discrete DAG particles currently active
         self.candidate_dags = self.world_model.sample_candidate_hypotheses(num_graph_particles)
         self.dag_weights = np.full(num_graph_particles, 1.0 / num_graph_particles, dtype=np.float64)
+
+        # History tracking
+        self.history_actions: List[int] = []
+        self.history_graph_entropy: List[float] = [float(self.world_model.graph_posterior.get_shannon_entropy().item())]
+        self.target_goal: Optional[np.ndarray] = None
+        self.is_confident = False
+
+    def train_step(self, batch_size: int = 16, epochs: int = 2) -> float:
+        """Performs variational EM updates on graph posterior parameters and neural SCM."""
+        if len(self.replay_buffer) < 4:
+            return 0.0
+
+        total_loss_val = 0.0
+        n_samples = min(len(self.replay_buffer), batch_size)
+        indices = self.rng.choice(len(self.replay_buffer), size=n_samples, replace=False)
+
+        batch_states = torch.tensor(np.array([self.replay_buffer[i][0] for i in indices]), dtype=torch.float32)
+        batch_actions = torch.tensor(np.array([self.replay_buffer[i][1] for i in indices]), dtype=torch.float32)
+        batch_next = torch.tensor(np.array([self.replay_buffer[i][2] for i in indices]), dtype=torch.float32)
+        # Combine interventions
+        batch_interv = {}
+        for idx, i in enumerate(indices):
+            interv_dict = self.replay_buffer[i][3]
+            for var, val in interv_dict.items():
+                batch_interv[var] = val
+
+        for _ in range(epochs):
+            self.optimizer.zero_grad()
+            out = self.world_model.compute_elbo_loss(
+                batch_states,
+                batch_actions,
+                batch_next,
+                interventions=batch_interv,
+                acyclicity_weight=2.0,
+                sparsity_weight=0.05
+            )
+            loss = out["total_loss"]
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(self.world_model.parameters(), max_norm=5.0)
+            self.optimizer.step()
+            total_loss_val += float(loss.item())
+
+        # Resample candidate DAG particles from improved posterior
+        self.candidate_dags = self.world_model.sample_candidate_hypotheses(self.num_graph_particles)
+        self.dag_weights = np.full(self.num_graph_particles, 1.0 / self.num_graph_particles, dtype=np.float64)
+        return total_loss_val / epochs
 
         # History tracking
         self.history_actions: List[int] = []

@@ -41,7 +41,11 @@ def compute_contrastive_graph_discrepancy(
         return 0.0
 
     if weights is not None:
-        w = np.asarray(weights, dtype=np.float64) / np.sum(weights)
+        sum_w = float(np.sum(weights))
+        if sum_w > 1e-12 and not np.isnan(sum_w):
+            w = np.asarray(weights, dtype=np.float64) / sum_w
+        else:
+            w = np.full(K, 1.0 / K, dtype=np.float64)
     else:
         w = np.full(K, 1.0 / K, dtype=np.float64)
 
