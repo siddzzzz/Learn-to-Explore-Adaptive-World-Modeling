@@ -1,0 +1,82 @@
+{
+  "objective_ablation": {
+    "CHD (Ours)": {
+      "mean_fixation_pct": 0.0,
+      "std_fixation_pct": 0.0,
+      "mean_steps_to_solve": 1.0,
+      "mean_final_entropy": 2.4177143476437483e-13
+    },
+    "BALD": {
+      "mean_fixation_pct": 0.0,
+      "std_fixation_pct": 0.0,
+      "mean_steps_to_solve": 1.0,
+      "mean_final_entropy": 2.4177143476437483e-13
+    },
+    "Plan2Explore (Variance)": {
+      "mean_fixation_pct": 0.0,
+      "std_fixation_pct": 0.0,
+      "mean_steps_to_solve": 1.0,
+      "mean_final_entropy": 2.4177143476437483e-13
+    },
+    "ICM (Prediction Error)": {
+      "mean_fixation_pct": 65.0,
+      "std_fixation_pct": 12.247448713915889,
+      "mean_steps_to_solve": 5.6,
+      "mean_final_entropy": 0.023035225484039117
+    },
+    "Random": {
+      "mean_fixation_pct": 16.666666666666664,
+      "std_fixation_pct": 7.4535599249993,
+      "mean_steps_to_solve": 3.8,
+      "mean_final_entropy": 2.4177143476437483e-13
+    }
+  },
+  "horizon_ablation": {
+    "H=1": {
+      "mean_steps_to_resolve": 4.12,
+      "std_steps_to_resolve": 0.07483314773547894,
+      "cumulative_info_gain": 1.109504825387108
+    },
+    "H=2": {
+      "mean_steps_to_resolve": 3.62,
+      "std_steps_to_resolve": 0.07483314773547889,
+      "cumulative_info_gain": 1.1009142323918877
+    },
+    "H=3": {
+      "mean_steps_to_resolve": 3.12,
+      "std_steps_to_resolve": 0.07483314773547889,
+      "cumulative_info_gain": 1.0897528550075737
+    },
+    "H=5": {
+      "mean_steps_to_resolve": 2.12,
+      "std_steps_to_resolve": 0.07483314773547889,
+      "cumulative_info_gain": 1.0531389348870352
+    }
+  },
+  "safety_bound_ablation": {
+    "Cantelli LCB (Safe-HEx-WM)": {
+      "mean_violations": 0.0,
+      "std_violations": 0.0,
+      "worst_margin": 0.24999999999999994,
+      "max_temperature": 343.9816204819866
+    },
+    "Gaussian LCB": {
+      "mean_violations": 0.0,
+      "std_violations": 0.0,
+      "worst_margin": 0.24999999999999994,
+      "max_temperature": 392.46192248924444
+    },
+    "Mean-Only (No Variance)": {
+      "mean_violations": 0.2,
+      "std_violations": 0.4000000000000001,
+      "worst_margin": 0.16151064679778526,
+      "max_temperature": 417.86361824471777
+    },
+    "Unconstrained": {
+      "mean_violations": 2.8,
+      "std_violations": 0.9797958971132712,
+      "worst_margin": -9.460422437153614,
+      "max_temperature": 429.4604224371536
+    }
+  }
+}
