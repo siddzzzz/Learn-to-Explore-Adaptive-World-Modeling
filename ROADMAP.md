@@ -166,9 +166,23 @@
 
 ---
 
+### [x] Phase 13: Neural Causal Graph Discovery Benchmark (Phase D)
+- [x] **Commit 1**: Formal mathematical protocol for interventional DAG structure recovery (`docs/NEURAL_GRAPH_DISCOVERY_PROTOCOL.md`)
+- [x] **Commit 2**: Standardized causal discovery evaluation metrics: SHD, TPR, FDR, reversals (`src/models/causal/graph_metrics.py`)
+- [x] **Commit 3**: Synthetic parameterized non-linear SCM generator (`src/envs/causal_lab/synthetic_dag_generator.py`)
+- [x] **Commit 4**: Graph metrics exports in `src/models/causal/__init__.py`
+- [x] **Commit 5**: Synthetic DAG generator exports in `src/envs/causal_lab/__init__.py`
+- [x] **Commit 6**: Comprehensive pytest suite for graph discovery and metrics (`tests/test_graph_metrics.py`)
+- [x] **Commit 7**: Variational EM updates and stable Bayesian likelihoods for `NeuralCausalAgent` (`src/agents/neural_causal_agent.py`, `src/planning/causal_acquisition.py`)
+- [x] **Commit 8**: Multi-seed neural graph benchmark runner and raw results logging (`benchmarks/run_neural_graph_recovery.py`, `benchmarks/results/neural_graph_recovery_results.json`)
+- [x] **Commit 9**: Publication Figure 8 generation (`benchmarks/figures/fig8_neural_graph_recovery.png`)
+- [x] **Commit 10**: Documentation update in `docs/EXPERIMENT_RESULTS.md` and roadmap integration
+
+---
+
 ### Upcoming Empirical Benchmarks (Before Paper Drafting)
-- [ ] **Phase D**: Neural Causal Graph Discovery Benchmark (Structural Hamming Distance, TPR, and FDR on 10/20-node DAGs)
 - [ ] **Phase E**: Systemic Scientific Ablation Matrix (EIG vs BALD vs CHD, Planning Horizons $H \in \{1, 3, 5\}$, Cantelli vs Gaussian bounds)
+
 
 
 
