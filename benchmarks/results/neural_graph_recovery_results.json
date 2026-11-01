@@ -1,0 +1,206 @@
+{
+  "Active CGD (Ours)": {
+    "mean_shd": 10.8,
+    "mean_tpr_pct": 11.333333333333332,
+    "mean_fdr_pct": 92.44444444444446,
+    "mean_reversed_edges": 1.8,
+    "trials": [
+      {
+        "shd": 14.0,
+        "tpr": 0.0,
+        "fdr": 1.0,
+        "precision": 0.0,
+        "tp": 0.0,
+        "fp": 10.0,
+        "fn": 8.0,
+        "reversed_edges": 4.0,
+        "total_true_edges": 8.0,
+        "total_pred_edges": 10.0
+      },
+      {
+        "shd": 9.0,
+        "tpr": 0.2,
+        "fdr": 0.8888888888888888,
+        "precision": 0.1111111111111111,
+        "tp": 1.0,
+        "fp": 8.0,
+        "fn": 4.0,
+        "reversed_edges": 3.0,
+        "total_true_edges": 5.0,
+        "total_pred_edges": 9.0
+      },
+      {
+        "shd": 10.0,
+        "tpr": 0.16666666666666666,
+        "fdr": 0.8333333333333334,
+        "precision": 0.16666666666666666,
+        "tp": 1.0,
+        "fp": 5.0,
+        "fn": 5.0,
+        "reversed_edges": 0.0,
+        "total_true_edges": 6.0,
+        "total_pred_edges": 6.0
+      },
+      {
+        "shd": 9.0,
+        "tpr": 0.0,
+        "fdr": 1.0,
+        "precision": 0.0,
+        "tp": 0.0,
+        "fp": 8.0,
+        "fn": 2.0,
+        "reversed_edges": 1.0,
+        "total_true_edges": 2.0,
+        "total_pred_edges": 8.0
+      },
+      {
+        "shd": 12.0,
+        "tpr": 0.2,
+        "fdr": 0.9,
+        "precision": 0.1,
+        "tp": 1.0,
+        "fp": 9.0,
+        "fn": 4.0,
+        "reversed_edges": 1.0,
+        "total_true_edges": 5.0,
+        "total_pred_edges": 10.0
+      }
+    ]
+  },
+  "Random Interventions": {
+    "mean_shd": 10.8,
+    "mean_tpr_pct": 11.333333333333332,
+    "mean_fdr_pct": 92.44444444444446,
+    "mean_reversed_edges": 1.8,
+    "trials": [
+      {
+        "shd": 14.0,
+        "tpr": 0.0,
+        "fdr": 1.0,
+        "precision": 0.0,
+        "tp": 0.0,
+        "fp": 10.0,
+        "fn": 8.0,
+        "reversed_edges": 4.0,
+        "total_true_edges": 8.0,
+        "total_pred_edges": 10.0
+      },
+      {
+        "shd": 9.0,
+        "tpr": 0.2,
+        "fdr": 0.8888888888888888,
+        "precision": 0.1111111111111111,
+        "tp": 1.0,
+        "fp": 8.0,
+        "fn": 4.0,
+        "reversed_edges": 3.0,
+        "total_true_edges": 5.0,
+        "total_pred_edges": 9.0
+      },
+      {
+        "shd": 10.0,
+        "tpr": 0.16666666666666666,
+        "fdr": 0.8333333333333334,
+        "precision": 0.16666666666666666,
+        "tp": 1.0,
+        "fp": 5.0,
+        "fn": 5.0,
+        "reversed_edges": 0.0,
+        "total_true_edges": 6.0,
+        "total_pred_edges": 6.0
+      },
+      {
+        "shd": 9.0,
+        "tpr": 0.0,
+        "fdr": 1.0,
+        "precision": 0.0,
+        "tp": 0.0,
+        "fp": 8.0,
+        "fn": 2.0,
+        "reversed_edges": 1.0,
+        "total_true_edges": 2.0,
+        "total_pred_edges": 8.0
+      },
+      {
+        "shd": 12.0,
+        "tpr": 0.2,
+        "fdr": 0.9,
+        "precision": 0.1,
+        "tp": 1.0,
+        "fp": 9.0,
+        "fn": 4.0,
+        "reversed_edges": 1.0,
+        "total_true_edges": 5.0,
+        "total_pred_edges": 10.0
+      }
+    ]
+  },
+  "Observational NOTEARS": {
+    "mean_shd": 10.8,
+    "mean_tpr_pct": 11.333333333333332,
+    "mean_fdr_pct": 92.44444444444446,
+    "mean_reversed_edges": 1.8,
+    "trials": [
+      {
+        "shd": 14.0,
+        "tpr": 0.0,
+        "fdr": 1.0,
+        "precision": 0.0,
+        "tp": 0.0,
+        "fp": 10.0,
+        "fn": 8.0,
+        "reversed_edges": 4.0,
+        "total_true_edges": 8.0,
+        "total_pred_edges": 10.0
+      },
+      {
+        "shd": 9.0,
+        "tpr": 0.2,
+        "fdr": 0.8888888888888888,
+        "precision": 0.1111111111111111,
+        "tp": 1.0,
+        "fp": 8.0,
+        "fn": 4.0,
+        "reversed_edges": 3.0,
+        "total_true_edges": 5.0,
+        "total_pred_edges": 9.0
+      },
+      {
+        "shd": 10.0,
+        "tpr": 0.16666666666666666,
+        "fdr": 0.8333333333333334,
+        "precision": 0.16666666666666666,
+        "tp": 1.0,
+        "fp": 5.0,
+        "fn": 5.0,
+        "reversed_edges": 0.0,
+        "total_true_edges": 6.0,
+        "total_pred_edges": 6.0
+      },
+      {
+        "shd": 9.0,
+        "tpr": 0.0,
+        "fdr": 1.0,
+        "precision": 0.0,
+        "tp": 0.0,
+        "fp": 8.0,
+        "fn": 2.0,
+        "reversed_edges": 1.0,
+        "total_true_edges": 2.0,
+        "total_pred_edges": 8.0
+      },
+      {
+        "shd": 12.0,
+        "tpr": 0.2,
+        "fdr": 0.9,
+        "precision": 0.1,
+        "tp": 1.0,
+        "fp": 9.0,
+        "fn": 4.0,
+        "reversed_edges": 1.0,
+        "total_true_edges": 5.0,
+        "total_pred_edges": 10.0
+      }
+    ]
+  }
+}
