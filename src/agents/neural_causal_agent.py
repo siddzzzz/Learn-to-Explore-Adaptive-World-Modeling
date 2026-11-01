@@ -80,7 +80,7 @@ class NeuralCausalAgent:
 
         for _ in range(epochs):
             self.optimizer.zero_grad()
-            out = self.world_model.compute_elbo_loss(
+            out = self.world_model.compute_loss(
                 batch_states,
                 batch_actions,
                 batch_next,
@@ -168,9 +168,14 @@ class NeuralCausalAgent:
         action: int,
         next_state: np.ndarray
     ) -> Dict[str, Any]:
-        """Performs Bayesian update over candidate DAG structures using transition likelihoods."""
+        """Performs Bayesian update over candidate DAG structures and appends to replay buffer."""
         interv = self.action_decoder_fn(action)
         a_vec = np.zeros(self.action_dim, dtype=np.float32)
+        if action > 0:
+            a_vec[action % self.action_dim] = 1.0
+
+        # Store in replay buffer for gradient-based training
+        self.replay_buffer.append((state.copy(), a_vec, next_state.copy(), interv))
 
         preds = self.world_model.predict_under_hypotheses(
             state, a_vec, self.candidate_dags, interventions=interv
@@ -186,10 +191,14 @@ class NeuralCausalAgent:
             sse = float(np.sum((next_state[:len(mu_k)] - mu_k) ** 2))
             log_liks[k] = -0.5 * (len(mu_k) * np.log(2.0 * np.pi * var) + sse / var)
 
-        # Numerically stable Bayes update
+        # Numerically stable Bayes update with particle resampling safeguard
         max_ll = np.max(log_liks)
-        unnorm = np.exp(log_liks - max_ll) * self.dag_weights
-        self.dag_weights = unnorm / max(1e-12, np.sum(unnorm))
+        unnorm = np.exp(log_liks - max_ll) * np.maximum(self.dag_weights, 1e-6)
+        total_mass = np.sum(unnorm)
+        if total_mass > 1e-12:
+            self.dag_weights = unnorm / total_mass
+        else:
+            self.dag_weights = np.full(K, 1.0 / K, dtype=np.float64)
 
         entropy = float(self.world_model.graph_posterior.get_shannon_entropy().item())
         self.history_graph_entropy.append(entropy)

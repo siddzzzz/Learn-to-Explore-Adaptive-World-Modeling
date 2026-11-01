@@ -84,10 +84,10 @@ def run_single_graph_recovery_trial(
         agent.observe_transition(current_state, action, next_state)
         current_state = next_state
 
-    # Final DAG prediction from the MAP candidate particle
+    # MAP candidate particle selection from Bayesian trajectory likelihoods
     map_idx = int(np.argmax(agent.dag_weights))
     G_pred = agent.candidate_dags[map_idx].detach().cpu().numpy()
-    metrics = compute_graph_metrics(G_true, G_pred, threshold=0.3)
+    metrics = compute_graph_metrics(G_true, G_pred, threshold=0.5)
     return metrics
 
 
