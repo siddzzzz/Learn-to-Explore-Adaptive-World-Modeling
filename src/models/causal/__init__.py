@@ -9,6 +9,7 @@ from src.models.causal.dag_utils import (
 from src.models.causal.graph_posterior import VariationalGraphPosterior
 from src.models.causal.neural_scm import NeuralSCM, VariableMechanism
 from src.models.causal.causal_world_model import DifferentiableCausalWorldModel
+from src.models.causal.graph_metrics import compute_graph_metrics
 
 __all__ = [
     "compute_acyclicity_constraint",
@@ -18,5 +19,6 @@ __all__ = [
     "VariationalGraphPosterior",
     "NeuralSCM",
     "VariableMechanism",
-    "DifferentiableCausalWorldModel"
+    "DifferentiableCausalWorldModel",
+    "compute_graph_metrics",
 ]
