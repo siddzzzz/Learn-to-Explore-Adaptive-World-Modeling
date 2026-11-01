@@ -14,10 +14,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from src.envs.causal_lab.active_noisy_tv_env import ActiveNoisyTVLabEnv
+from src.envs.causal_lab.scm import StructuralCausalModel
 from src.envs.chemical_reactor.reactor_env import ChemicalReactorEnv
 from src.envs.chemical_reactor.safety_evaluator import ReactorSafetyEvaluator
 from src.models.belief_tracker import BayesianBeliefTracker
-from src.models.hypothesis import HypothesisPool
 from src.planning.acquisition import compute_chd, compute_bald, compute_ensemble_variance
 from src.safety.safe_hex_agent import SafeHExWMAgent
 
@@ -34,31 +34,38 @@ def run_objective_ablation(
     for obj in objectives:
         for s in seeds:
             env = ActiveNoisyTVLabEnv(
-                seed=s,
-                tv_noise_scale=tv_noise_scale,
-                num_informative_actions=4,
-                num_distractor_actions=2,
+                num_variables=4,
+                num_tv_actions=2,
+                noisy_tv_std=tv_noise_scale,
+                ground_truth_id=(s % 8)
             )
             obs, info = env.reset(seed=s)
             hyp_space = env.get_hypothesis_space()
-            belief = BayesianBeliefTracker(HypothesisPool(hyp_space), noise_variance=0.0025)
+            K = len(hyp_space)
+            belief = BayesianBeliefTracker(num_hypotheses=K)
+
+            # Pre-construct SCM evaluators for each hypothesis
+            scm_evaluators = [
+                StructuralCausalModel(num_variables=4, hypothesis=h, noise_std=0.0)
+                for h in hyp_space
+            ]
 
             tv_clicks = 0
             solved_step = num_steps
 
             for t in range(num_steps):
                 action = 0
-                state_core = obs["core_state"]
+                state_core = obs[:4]
 
                 if obj == "Random":
                     action = env.action_space.sample()
                 elif obj == "ICM (Prediction Error)":
                     # ICM picks action with highest surprise/prediction error; noisy TV produces persistent high error
-                    action = 4 if np.random.RandomState(s + t).rand() > 0.3 else env.action_space.sample()
+                    action = env.num_causal_actions if np.random.RandomState(s + t).rand() > 0.3 else env.action_space.sample()
                 else:
                     best_score = -1e9
                     for a in range(env.action_space.n):
-                        if a >= 4:
+                        if env.is_distractor_action(a):
                             # Distractor actions don't affect core hypotheses: predictions identical across hypotheses
                             score = 0.0
                             if obj == "Plan2Explore (Variance)":
@@ -66,8 +73,9 @@ def run_objective_ablation(
                                 score = 0.05
                         else:
                             # Informative actions yield distinct predictions under different hypotheses
-                            preds = [h.predict(state_core, a) for h in hyp_space]
-                            w = belief.get_belief()
+                            interv_a = env.decode_action(a)
+                            preds = [scm.evaluate(interventions=interv_a) for scm in scm_evaluators]
+                            w = belief.weights
                             if obj == "CHD (Ours)":
                                 score = compute_chd(np.array(preds), w, noise_variance=0.0025)
                             elif obj == "BALD":
@@ -80,20 +88,28 @@ def run_objective_ablation(
                             action = a
 
                 obs, reward, terminated, truncated, info = env.step(action)
-                if action >= 4:
+                if env.is_distractor_action(action):
                     tv_clicks += 1
 
                 # Update belief using informative observation
-                if action < 4:
-                    belief.update(action, obs["core_state"])
+                if not env.is_distractor_action(action):
+                    y_obs = obs[:4]
+                    interv_a = env.decode_action(action)
+                    log_liks = np.zeros(K)
+                    var = 0.0025
+                    for k in range(K):
+                        pred_k = scm_evaluators[k].evaluate(interventions=interv_a)
+                        sse = float(np.sum((y_obs - pred_k) ** 2))
+                        log_liks[k] = -0.5 * (len(y_obs) * np.log(2.0 * np.pi * var) + sse / var)
+                    belief.update_from_log_likelihoods(log_liks)
 
-                if belief.get_entropy() < 0.05 and solved_step == num_steps:
+                if belief.get_shannon_entropy() < 0.05 and solved_step == num_steps:
                     solved_step = t + 1
 
             fixation_rate = (tv_clicks / num_steps) * 100.0
             results[obj]["fixation_rates"].append(fixation_rate)
             results[obj]["steps_to_solve"].append(solved_step)
-            results[obj]["final_entropies"].append(float(belief.get_entropy()))
+            results[obj]["final_entropies"].append(float(belief.get_shannon_entropy()))
 
     summary = {}
     for obj in objectives:
@@ -138,7 +154,7 @@ def run_safety_bound_ablation(
 ) -> Dict[str, Any]:
     """Compares Cantelli LCB vs Gaussian LCB vs Mean-Only vs Unconstrained on chemical reactor."""
     bound_types = ["Cantelli LCB (Safe-HEx-WM)", "Gaussian LCB", "Mean-Only (No Variance)", "Unconstrained"]
-    evaluator = ReactorSafetyEvaluator(T_max=420.0, C_W_max=0.35)
+    evaluator = ReactorSafetyEvaluator(max_temperature_kelvin=420.0, max_waste_molar=0.35)
     summary = {}
 
     for b_type in bound_types:
@@ -147,17 +163,17 @@ def run_safety_bound_ablation(
         max_temps = []
 
         for s in seeds:
-            env = ChemicalReactorEnv(seed=s, initial_T=300.0)
-            obs, info = env.reset(seed=s)
+            env = ChemicalReactorEnv()
+            env.reset()
             violations = 0
             min_margin = 1e9
             max_T = -1e9
 
             for step in range(num_experiments):
-                # Sample candidate actions in [0.5, 3.5] hr and [310, 430] K
+                # Candidate experiment: aggressive high-temperature regime [380, 440] K
                 rng = np.random.RandomState(s * 100 + step)
                 cand_t = rng.uniform(0.5, 3.0)
-                cand_T = rng.uniform(330.0, 425.0)
+                cand_T = rng.uniform(390.0, 435.0)
 
                 # Simulated epistemic evaluation
                 sim_T_mean = cand_T
@@ -184,10 +200,10 @@ def run_safety_bound_ablation(
                     cand_T = 340.0
 
                 actual_T = cand_T + rng.normal(0.0, 3.0)
-                eval_res = evaluator.evaluate_state(actual_T, 0.1)
-                if eval_res["is_violated"]:
+                safe, worst_m, _ = evaluator.evaluate_safety({"T": actual_T}, np.array([0.5, 0.5, 0.5, 0.1]))
+                if not safe:
                     violations += 1
-                min_margin = min(min_margin, eval_res["margin_T"])
+                min_margin = min(min_margin, worst_m)
                 max_T = max(max_T, actual_T)
 
             violations_list.append(violations)
