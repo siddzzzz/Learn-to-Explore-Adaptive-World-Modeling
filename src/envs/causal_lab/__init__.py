@@ -7,6 +7,7 @@ from src.envs.causal_lab.scm import (
 )
 from src.envs.causal_lab.lab_env import CausalLabEnv
 from src.envs.causal_lab.active_noisy_tv_env import ActiveNoisyTVLabEnv
+from src.envs.causal_lab.synthetic_dag_generator import SyntheticCausalDAG
 from src.envs.causal_lab.oracle import AnalyticalBayesianFilter
 
 __all__ = [
@@ -15,5 +16,6 @@ __all__ = [
     "generate_canonical_hypothesis_space",
     "CausalLabEnv",
     "ActiveNoisyTVLabEnv",
+    "SyntheticCausalDAG",
     "AnalyticalBayesianFilter"
 ]
